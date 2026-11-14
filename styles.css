@@ -333,6 +333,20 @@ input, textarea { font: inherit; }
   font-size: 14px;
   font-weight: 600;
 }
+.send-choice-label { margin: 0; font-weight: 600; font-size: 14px; }
+.send-choice { display: grid; gap: 10px; }
+@media (min-width: 560px) { .send-choice { grid-template-columns: 1fr 1fr; } }
+.form-error {
+  margin: 0;
+  background: rgba(255, 107, 107, .12);
+  border: 1px solid rgba(255, 107, 107, .5);
+  border-radius: var(--radius-sm);
+  padding: 11px 13px;
+  font-size: 14px;
+  font-weight: 600;
+}
+.form-error[hidden] { display: none; }
+.btn:disabled { opacity: .6; cursor: wait; }
 .empty-cart { text-align: center; padding: 64px 0; }
 .empty-cart .empty-icon { font-size: 56px; line-height: 1; margin-bottom: 16px; }
 .empty-cart p { color: var(--muted); margin: 0 0 24px; font-size: 18px; }

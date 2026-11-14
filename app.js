@@ -1,6 +1,8 @@
 'use strict';
 
-/* locallink shop — static storefront, orders go to WhatsApp. No backend. */
+/* locallink shop — static storefront, no backend.
+   Orders go to email (FormSubmit → locallink.ge@gmail.com) or WhatsApp —
+   the customer chooses at checkout. */
 
 var WA_NUMBER = '995597777619';
 var WA_URL = 'https://wa.me/' + WA_NUMBER;
@@ -8,39 +10,10 @@ var FB_URL = 'https://www.facebook.com/people/Local-Link-%E1%83%A8%E1%83%94%E1%8
 var PHONE_DISPLAY = '597 777 619';
 var PHONE_LINK = 'tel:+995597777619';
 var EMAIL = 'locallink.ge@gmail.com';
+var FORMSUBMIT_URL = 'https://formsubmit.co/ajax/' + EMAIL;
 var SITE_URL = 'https://locallink.store/';
 
 var PRODUCTS = [
-  {
-    slug: 'nfc-stand',
-    price: 50,
-    img: 'images/nfc-stand.jpg',
-    name: {
-      ka: 'NFC სტენდი — Google შეფასება',
-      en: 'NFC Stand — Google Review',
-      ru: 'NFC-стенд — отзыв в Google'
-    },
-    desc: {
-      ka: 'მაგიდის სტენდი NFC ჩიპით. მომხმარებელი ტელეფონს ადებს სტენდს და მაშინვე იხსნება თქვენი Google შეფასების გვერდი. ზომა: 12 × 12 სმ.',
-      en: 'Table stand with an NFC chip. Customers tap it with their phone and your Google review page opens instantly. Size: 12 × 12 cm.',
-      ru: 'Настольный стенд с NFC-чипом. Клиент прикладывает телефон — и сразу открывается страница отзывов в Google. Размер: 12 × 12 см.'
-    }
-  },
-  {
-    slug: 'nfc-card',
-    price: 40,
-    img: 'images/nfc-card.jpg',
-    name: {
-      ka: 'ორფხრივი NFC ბარათი — Google შეფასება',
-      en: 'Double-Sided NFC Card — Google Review',
-      ru: 'Двусторонняя NFC-карта — отзыв в Google'
-    },
-    desc: {
-      ka: 'ორფხრივი ბარათი NFC ჩიპითა და QR კოდით. ტელეფონის მიდებით ან QR კოდის დასკანერებით იხსნება Google შეფასების გვერდი. ზომა: 8.55 × 5.4 სმ.',
-      en: 'Double-sided card with an NFC chip and a QR code. Tap a phone or scan the QR code to open the Google review page. Size: 8.55 × 5.4 cm.',
-      ru: 'Двусторонняя карта с NFC-чипом и QR-кодом. Приложите телефон или отсканируйте QR-код — откроется страница отзывов в Google. Размер: 8,55 × 5,4 см.'
-    }
-  },
   {
     slug: 'sticker-black',
     price: 15,
@@ -69,6 +42,36 @@ var PRODUCTS = [
       ka: 'მრგვალი NFC სტიკერი თეთრი ფერის. ტელეფონის მიდებით იხსნება Google შეფასების გვერდი. დიამეტრი: 2.5 სმ.',
       en: 'Round NFC sticker in white. Tap it with a phone to open the Google review page. Diameter: 2.5 cm.',
       ru: 'Круглая NFC-наклейка белого цвета. Приложите телефон — откроется страница отзывов в Google. Диаметр: 2,5 см.'
+    }
+  },
+  {
+    slug: 'nfc-card',
+    price: 40,
+    img: 'images/nfc-card.jpg',
+    name: {
+      ka: 'ორფხრივი NFC ბარათი — Google შეფასება',
+      en: 'Double-Sided NFC Card — Google Review',
+      ru: 'Двусторонняя NFC-карта — отзыв в Google'
+    },
+    desc: {
+      ka: 'ორფხრივი ბარათი NFC ჩიპითა და QR კოდით. ტელეფონის მიდებით ან QR კოდის დასკანერებით იხსნება Google შეფასების გვერდი. ზომა: 8.55 × 5.4 სმ.',
+      en: 'Double-sided card with an NFC chip and a QR code. Tap a phone or scan the QR code to open the Google review page. Size: 8.55 × 5.4 cm.',
+      ru: 'Двусторонняя карта с NFC-чипом и QR-кодом. Приложите телефон или отсканируйте QR-код — откроется страница отзывов в Google. Размер: 8,55 × 5,4 см.'
+    }
+  },
+  {
+    slug: 'nfc-stand',
+    price: 50,
+    img: 'images/nfc-stand.jpg',
+    name: {
+      ka: 'NFC სტენდი — Google შეფასება',
+      en: 'NFC Stand — Google Review',
+      ru: 'NFC-стенд — отзыв в Google'
+    },
+    desc: {
+      ka: 'მაგიდის სტენდი NFC ჩიპით. მომხმარებელი ტელეფონს ადებს სტენდს და მაშინვე იხსნება თქვენი Google შეფასების გვერდი. ზომა: 12 × 12 სმ.',
+      en: 'Table stand with an NFC chip. Customers tap it with their phone and your Google review page opens instantly. Size: 12 × 12 cm.',
+      ru: 'Настольный стенд с NFC-чипом. Клиент прикладывает телефон — и сразу открывается страница отзывов в Google. Размер: 12 × 12 см.'
     }
   },
   {
@@ -144,10 +147,15 @@ var I18N = {
     fComment: 'კომენტარი (არასავალდებულო)',
     fCommentShort: 'კომენტარი',
     cashNote: 'გადახდა ხდება ნაღდი ანგარიშსწორებით.',
-    submitOrder: 'შეკვეთის გაფორმება',
+    sendChoice: 'როგორ გსურთ შეკვეთის გაგზავნა?',
+    submitEmail: 'გაგზავნა ელფოსტით',
+    submitWhatsApp: 'გაგზავნა WhatsApp-ით',
+    sending: 'იგზავნება…',
+    sendError: 'შეკვეთის გაგზავნა ვერ მოხერხდა. გთხოვთ, სცადოთ WhatsApp-ით ან ცოტა მოგვიანებით.',
     toastAdded: 'პროდუქტი დაემატა კალათაში',
     popupTitle: 'შეკვეთა მიღებულია',
     popupBody: 'გმადლობთ! შეკვეთა WhatsApp-ით გაიგზავნა, მალე დაგიკავშირდებით.',
+    popupBodyEmail: 'გმადლობთ! შეკვეთა ელფოსტით გაიგზავნა, მალე დაგიკავშირდებით.',
     popupClose: 'დახურვა',
     orderTitle: 'ახალი შეკვეთა — locallink',
     orderPayment: 'გადახდა: ნაღდი ანგარიშსწორება'
@@ -207,10 +215,15 @@ var I18N = {
     fComment: 'Comment (optional)',
     fCommentShort: 'Comment',
     cashNote: 'Payment is cash on delivery.',
-    submitOrder: 'Place order',
+    sendChoice: 'How would you like to send your order?',
+    submitEmail: 'Send by email',
+    submitWhatsApp: 'Send via WhatsApp',
+    sending: 'Sending…',
+    sendError: 'The order could not be sent. Please try WhatsApp or try again later.',
     toastAdded: 'Product added to cart',
     popupTitle: 'Order received',
     popupBody: 'Thank you! Your order was sent via WhatsApp. We will contact you soon.',
+    popupBodyEmail: 'Thank you! Your order was sent by email. We will contact you soon.',
     popupClose: 'Close',
     orderTitle: 'New order — locallink',
     orderPayment: 'Payment: cash on delivery'
@@ -270,10 +283,15 @@ var I18N = {
     fComment: 'Комментарий (необязательно)',
     fCommentShort: 'Комментарий',
     cashNote: 'Оплата — наличными при получении.',
-    submitOrder: 'Оформить заказ',
+    sendChoice: 'Как вы хотите отправить заказ?',
+    submitEmail: 'Отправить по почте',
+    submitWhatsApp: 'Отправить через WhatsApp',
+    sending: 'Отправка…',
+    sendError: 'Не удалось отправить заказ. Попробуйте WhatsApp или повторите попытку позже.',
     toastAdded: 'Товар добавлен в корзину',
     popupTitle: 'Заказ получен',
     popupBody: 'Спасибо! Ваш заказ отправлен через WhatsApp. Мы скоро свяжемся с вами.',
+    popupBodyEmail: 'Спасибо! Ваш заказ отправлен по почте. Мы скоро свяжемся с вами.',
     popupClose: 'Закрыть',
     orderTitle: 'Новый заказ — locallink',
     orderPayment: 'Оплата: наличными при получении'
@@ -410,9 +428,9 @@ function showToast(msg) {
   clearTimeout(toastTimer);
   toastTimer = setTimeout(function () { toast.hidden = true; }, 2200);
 }
-function showPopup() {
+function showPopup(bodyKey) {
   document.getElementById('popup-title').textContent = t('popupTitle');
-  document.getElementById('popup-body').textContent = t('popupBody');
+  document.getElementById('popup-body').textContent = t(bodyKey || 'popupBody');
   document.getElementById('popup-close').textContent = t('popupClose');
   document.getElementById('popup').hidden = false;
 }
@@ -569,7 +587,12 @@ function cartView() {
         '<div class="field"><label for="f-address">' + esc(t('fAddress')) + '</label><input id="f-address" name="address" type="text" autocomplete="street-address" required></div>' +
         '<div class="field"><label for="f-comment">' + esc(t('fComment')) + '</label><textarea id="f-comment" name="comment" rows="3"></textarea></div>' +
         '<p class="cash-note">' + esc(t('cashNote')) + '</p>' +
-        '<button class="btn btn-large" type="submit">' + esc(t('submitOrder')) + '</button>' +
+        '<p class="send-choice-label">' + esc(t('sendChoice')) + '</p>' +
+        '<div class="send-choice">' +
+          '<button class="btn btn-large" type="submit" data-send="email">' + esc(t('submitEmail')) + '</button>' +
+          '<button class="btn btn-large btn-outline" type="submit" data-send="whatsapp">' + esc(t('submitWhatsApp')) + '</button>' +
+        '</div>' +
+        '<p class="form-error" id="form-error" role="alert" hidden></p>' +
       '</form>' +
     '</div>' +
   '</div></div>';
@@ -630,33 +653,106 @@ function bindProductPage() {
   if (inc) inc.addEventListener('click', function () { if (qty < 99) { qty++; sync(); } });
 }
 
+function orderFormValues(form) {
+  return {
+    name: form.name.value.trim(),
+    phone: form.phone.value.trim(),
+    city: form.city.value.trim(),
+    address: form.address.value.trim(),
+    comment: form.comment.value.trim()
+  };
+}
+
+/* WhatsApp text in the customer's language. */
+function buildOrderLines(keys, v) {
+  var lines = [t('orderTitle'), ''];
+  keys.forEach(function (slug, i) {
+    var p = productBySlug(slug);
+    lines.push((i + 1) + '. ' + p.name[lang] + ' × ' + cart[slug] + ' — ' + price(p.price * cart[slug]));
+  });
+  lines.push('', t('total') + ': ' + price(cartTotal()), '');
+  lines.push(t('fName') + ': ' + v.name);
+  lines.push(t('fPhone') + ': ' + v.phone);
+  lines.push(t('fCity') + ': ' + v.city);
+  lines.push(t('fAddress') + ': ' + v.address);
+  if (v.comment) lines.push(t('fCommentShort') + ': ' + v.comment);
+  lines.push(t('orderPayment'));
+  return lines;
+}
+
+/* Email fields with fixed Georgian labels — the inbox owner reads Georgian. */
+function buildEmailFields(keys, v) {
+  var items = keys.map(function (slug, i) {
+    var p = productBySlug(slug);
+    return (i + 1) + '. ' + p.name.ka + ' × ' + cart[slug] + ' — ' + price(p.price * cart[slug]);
+  });
+  var fields = {
+    '_subject': 'ახალი შეკვეთა — locallink',
+    'პროდუქტები': items.join('\n'),
+    'ჯამი': price(cartTotal()),
+    'სახელი და გვარი': v.name,
+    'ტელეფონი': v.phone,
+    'ქალაქი': v.city,
+    'მისამართი': v.address,
+    'გადახდა': 'ნაღდი ანგარიშსწორება',
+    '_template': 'table',
+    '_captcha': 'false'
+  };
+  if (v.comment) fields['კომენტარი'] = v.comment;
+  return fields;
+}
+
+function finishOrder(bodyKey) {
+  cart = {};
+  saveCart();
+  updateBadge();
+  showPopup(bodyKey);
+  renderView();
+}
+
+function sendOrderByEmail(form, keys, v) {
+  var buttons = form.querySelectorAll('[data-send]');
+  var emailBtn = form.querySelector('[data-send="email"]');
+  var err = document.getElementById('form-error');
+  var originalLabel = emailBtn ? emailBtn.textContent : '';
+  err.hidden = true;
+  for (var i = 0; i < buttons.length; i++) buttons[i].disabled = true;
+  if (emailBtn) emailBtn.textContent = t('sending');
+  fetch(FORMSUBMIT_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+    body: JSON.stringify(buildEmailFields(keys, v))
+  }).then(function (res) {
+    if (!res.ok) throw new Error('formsubmit http ' + res.status);
+    finishOrder('popupBodyEmail');
+  }).catch(function () {
+    for (var j = 0; j < buttons.length; j++) buttons[j].disabled = false;
+    if (emailBtn) emailBtn.textContent = originalLabel;
+    err.textContent = t('sendError');
+    err.hidden = false;
+  });
+}
+
 function bindCartPage() {
   var form = document.getElementById('order-form');
   if (!form) return;
+  var channel = 'email';
+  form.addEventListener('click', function (e) {
+    var b = e.target.closest ? e.target.closest('[data-send]') : null;
+    if (b) channel = b.getAttribute('data-send');
+  });
   form.addEventListener('submit', function (e) {
     e.preventDefault();
     if (!form.checkValidity()) { form.reportValidity(); return; }
     var keys = Object.keys(cart).filter(function (k) { return cart[k] > 0 && productBySlug(k); });
     if (!keys.length) return;
-    var lines = [t('orderTitle'), ''];
-    keys.forEach(function (slug, i) {
-      var p = productBySlug(slug);
-      lines.push((i + 1) + '. ' + p.name[lang] + ' × ' + cart[slug] + ' — ' + price(p.price * cart[slug]));
-    });
-    lines.push('', t('total') + ': ' + price(cartTotal()), '');
-    lines.push(t('fName') + ': ' + form.name.value.trim());
-    lines.push(t('fPhone') + ': ' + form.phone.value.trim());
-    lines.push(t('fCity') + ': ' + form.city.value.trim());
-    lines.push(t('fAddress') + ': ' + form.address.value.trim());
-    var comment = form.comment.value.trim();
-    if (comment) lines.push(t('fCommentShort') + ': ' + comment);
-    lines.push(t('orderPayment'));
-    window.open(WA_URL + '?text=' + encodeURIComponent(lines.join('\n')), '_blank');
-    cart = {};
-    saveCart();
-    updateBadge();
-    showPopup();
-    renderView();
+    var v = orderFormValues(form);
+    if (channel === 'whatsapp') {
+      window.open(WA_URL + '?text=' + encodeURIComponent(buildOrderLines(keys, v).join('\n')), '_blank');
+      finishOrder('popupBody');
+    } else {
+      sendOrderByEmail(form, keys, v);
+    }
   });
 }
 
