@@ -120,6 +120,16 @@ var I18N = {
     why4d: 'დაგეხმარებით შეფასების გვერდის დაკავშირებასა და სტენდის დამონტაჟებაში.',
     deliveryTitle: 'მიწოდება და მონტაჟი',
     deliveryText: 'ახალციხეში მიწოდება და მონტაჟი უფასოა. შეკვეთას მოგიტანთ და ადგილზე დაგიმონტაჟებთ.',
+    navServices: 'სერვისები',
+    servicesTitle: 'ვებსაიტების აწყობა',
+    servicesText: 'თანამედროვე ვებსაიტი თქვენი ბიზნესისთვის. დეტალები და საბოლოო ფასი შეთანხმებით — დაგვიკავშირდით.',
+    servicesSite: 'საიტის აწყობა',
+    servicesSitePrice: '50₾-დან',
+    servicesDomain: 'დომენი (ცალკე)',
+    servicesDomainPrice: '5₾-დან',
+    servicesWhatsApp: 'WhatsApp-ით დაკავშირება',
+    servicesCall: 'დარეკვა',
+    servicesWaText: 'გამარჯობა, ვებსაიტის აწყობა მაინტერესებს.',
     aboutTitle: 'ჩვენს შესახებ',
     aboutText: 'locallink — NFC პროდუქტები ბიზნესისთვის: სტენდები, ბარათები და სტიკერები, რომლებიც მომხმარებელს Google შეფასების გვერდზე გადასვლას უმარტივებს.',
     contactTitle: 'კონტაქტი',
@@ -188,6 +198,16 @@ var I18N = {
     why4d: 'We help connect your review page and install the stand.',
     deliveryTitle: 'Delivery and installation',
     deliveryText: 'Delivery and installation in Akhaltsikhe are free. We bring your order and install it on site.',
+    navServices: 'Services',
+    servicesTitle: 'Website development',
+    servicesText: 'A modern website for your business. Details and the final price are agreed individually — contact us.',
+    servicesSite: 'Website build',
+    servicesSitePrice: 'from 50₾',
+    servicesDomain: 'Domain (separate)',
+    servicesDomainPrice: 'from 5₾',
+    servicesWhatsApp: 'Contact via WhatsApp',
+    servicesCall: 'Call',
+    servicesWaText: 'Hello, I am interested in a website build.',
     aboutTitle: 'About us',
     aboutText: 'locallink — NFC products for businesses: stands, cards and stickers that make it easy for customers to reach your Google review page.',
     contactTitle: 'Contact',
@@ -256,6 +276,16 @@ var I18N = {
     why4d: 'Поможем подключить страницу отзывов и установить стенд.',
     deliveryTitle: 'Доставка и установка',
     deliveryText: 'В Ахалцихе доставка и установка бесплатны. Мы привезём заказ и установим его на месте.',
+    navServices: 'Услуги',
+    servicesTitle: 'Создание сайтов',
+    servicesText: 'Современный сайт для вашего бизнеса. Детали и итоговая цена — по договорённости, свяжитесь с нами.',
+    servicesSite: 'Создание сайта',
+    servicesSitePrice: 'от 50₾',
+    servicesDomain: 'Домен (отдельно)',
+    servicesDomainPrice: 'от 5₾',
+    servicesWhatsApp: 'Связаться в WhatsApp',
+    servicesCall: 'Позвонить',
+    servicesWaText: 'Здравствуйте, меня интересует создание сайта.',
     aboutTitle: 'О нас',
     aboutText: 'locallink — NFC-продукты для бизнеса: стенды, карты и наклейки, с которыми клиенты легко переходят на страницу отзывов в Google.',
     contactTitle: 'Контакты',
@@ -351,6 +381,7 @@ function renderChrome() {
   nav.innerHTML =
     '<a href="#/" data-section="top">' + esc(t('navHome')) + '</a>' +
     '<a href="#/" data-section="products">' + esc(t('navProducts')) + '</a>' +
+    '<a href="#/" data-section="services">' + esc(t('navServices')) + '</a>' +
     '<a href="#/" data-section="about">' + esc(t('navAbout')) + '</a>' +
     '<a href="#/" data-section="contact">' + esc(t('navContact')) + '</a>';
 
@@ -505,7 +536,21 @@ function homeView() {
       '</div>' +
     '</div></section>' +
 
-    '<section class="section section-alt" id="about"><div class="container"><div class="split">' +
+    '<section class="section section-alt" id="services"><div class="container">' +
+      '<div class="services-box">' +
+        '<div class="delivery-icon" aria-hidden="true">💻</div>' +
+        '<div><h2>' + esc(t('servicesTitle')) + '</h2><p>' + esc(t('servicesText')) + '</p>' +
+          '<p class="services-price"><span>' + esc(t('servicesSite')) + '</span> <strong>' + esc(t('servicesSitePrice')) + '</strong></p>' +
+          '<p class="services-price"><span>' + esc(t('servicesDomain')) + '</span> <strong>' + esc(t('servicesDomainPrice')) + '</strong></p>' +
+          '<div class="services-actions">' +
+            '<a class="btn" style="width:auto" href="' + WA_URL + '?text=' + encodeURIComponent(t('servicesWaText')) + '" target="_blank" rel="noopener">' + esc(t('servicesWhatsApp')) + '</a>' +
+            '<a class="btn btn-outline" style="width:auto" href="' + PHONE_LINK + '">' + esc(t('servicesCall')) + '</a>' +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+    '</div></section>' +
+
+    '<section class="section" id="about"><div class="container"><div class="split">' +
       '<div><h2>' + esc(t('aboutTitle')) + '</h2><p>' + esc(t('aboutText')) + '</p></div>' +
       '<div id="contact"><h2>' + esc(t('contactTitle')) + '</h2>' +
         '<ul class="contact-list">' +

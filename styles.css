@@ -223,7 +223,7 @@ input, textarea { font: inherit; }
 .why-item p { margin: 0; color: var(--muted); font-size: 15px; }
 
 /* Delivery */
-.delivery-box {
+.delivery-box, .services-box {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
@@ -233,9 +233,14 @@ input, textarea { font: inherit; }
   align-items: center;
   flex-wrap: wrap;
 }
-.delivery-box h2 { margin: 0 0 6px; }
-.delivery-box p { margin: 0; color: var(--muted); max-width: 560px; }
+.delivery-box h2, .services-box h2 { margin: 0 0 6px; }
+.delivery-box p, .services-box p { margin: 0; color: var(--muted); max-width: 560px; }
 .delivery-icon { font-size: 40px; line-height: 1; }
+
+/* Services */
+.services-box .services-price { margin-top: 10px; }
+.services-box .services-price strong { color: var(--text); font-size: 18px; margin-left: 6px; }
+.services-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 18px; }
 
 /* About / contact */
 .split { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
