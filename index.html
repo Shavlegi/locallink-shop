@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>locallink — NFC პროდუქტები შენი ბიზნესისთვის</title>
+<meta name="description" content="locallink — NFC სტენდები, ბარათები და სტიკერები Google შეფასებებისთვის. უფასო მიწოდება და მონტაჟი ახალციხეში. გადახდა ნაღდი ანგარიშსწორებით.">
+<meta property="og:title" content="locallink — NFC პროდუქტები">
+<meta property="og:description" content="NFC სტენდები, ბარათები და სტიკერები Google შეფასებებისთვის. უფასო მიწოდება და მონტაჟი ახალციხეში.">
+<meta property="og:image" content="images/logo.png">
+<link rel="icon" type="image/png" href="images/logo.png">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="topbar"><span id="topbar-text"></span></div>
+
+<header class="header">
+  <div class="container header-inner">
+    <a class="brand" href="#/" aria-label="locallink — home">
+      <img src="images/logo.png" alt="locallink" width="40" height="40">
+      <span class="brand-name">locallink</span>
+    </a>
+    <nav class="nav" id="main-nav" aria-label="Main"></nav>
+    <div class="header-tools">
+      <input type="search" id="search-input" autocomplete="off" aria-label="Search">
+      <div class="lang-switch" id="lang-switch" role="group" aria-label="Language"></div>
+      <a class="cart-link" href="#/cart" id="cart-link" aria-label="Cart">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.4"/><circle cx="17" cy="20" r="1.4"/><path d="M3 3h2.5l2.2 11.5a1.5 1.5 0 0 0 1.5 1.2h7.9a1.5 1.5 0 0 0 1.5-1.2L20.5 7H6"/></svg>
+        <span class="cart-badge" id="cart-badge" hidden>0</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<main id="app"></main>
+
+<footer class="footer" id="footer"></footer>
+
+<div class="popup-overlay" id="popup" hidden>
+  <div class="popup" role="dialog" aria-modal="true" aria-labelledby="popup-title">
+    <div class="popup-check" aria-hidden="true">✓</div>
+    <h2 id="popup-title"></h2>
+    <p id="popup-body"></p>
+    <button class="btn" id="popup-close" type="button"></button>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+<script src="app.js"></script>
+</body>
+</html>
