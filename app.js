@@ -1078,7 +1078,7 @@ function buildOrderLines(pKeys, sKeys, v) {
     lines.push(t('total') + ': ' + price(totals.once));
   } else {
     if (totals.once > 0 || !totals.hasMonthly) lines.push(t('totalOnce') + ': ' + price(totals.once));
-    if (totals.hasMonthly) lines.push(t('totalMonthly') + ': ' + price(totals.monthly));
+    if (totals.hasMonthly) lines.push(t('totalMonthly') + ': ' + price(totals.monthly) + t('monthlySuffix'));
     if (totals.hasFrom) lines.push(t('fromPriceNote'));
   }
   lines.push('');
@@ -1112,7 +1112,7 @@ function buildEmailFields(pKeys, sKeys, v) {
     fields['ჯამი'] = price(totals.once);
   } else {
     if (totals.once > 0 || !totals.hasMonthly) fields['ერთჯერადი ჯამი'] = price(totals.once);
-    if (totals.hasMonthly) fields['ყოველთვიური ჯამი'] = price(totals.monthly);
+    if (totals.hasMonthly) fields['ყოველთვიური ჯამი'] = price(totals.monthly) + I18N.ka.monthlySuffix;
     if (totals.hasFrom) fields['შენიშვნა'] = 'საბოლოო ფასი შეთანხმებით.';
   }
   fields['სახელი და გვარი'] = v.name;

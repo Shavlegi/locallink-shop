@@ -331,14 +331,17 @@ input, textarea { font: inherit; }
 .qty-sm button { width: 32px; height: 32px; font-size: 17px; }
 .qty-sm span { min-width: 32px; }
 .remove-btn {
-  border: 0;
-  background: none;
-  color: var(--muted);
+  border: 1px solid #e5484d;
+  background: #e5484d;
+  color: #fff;
   font-size: 13px;
-  font-weight: 600;
-  padding: 4px 0 0;
+  font-weight: 700;
+  padding: 7px 14px;
+  border-radius: var(--radius-sm);
+  margin-top: 8px;
+  transition: background .15s ease, border-color .15s ease;
 }
-.remove-btn:hover { color: #ff6b6b; }
+.remove-btn:hover { background: #d13438; border-color: #d13438; color: #fff; }
 .cart-total-row {
   display: flex;
   justify-content: space-between;
