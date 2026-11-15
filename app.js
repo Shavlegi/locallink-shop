@@ -96,74 +96,74 @@ var SERVICES = [
   {
     title: { ka: 'Google Business პროფილი', en: 'Google Business Profile', ru: 'Профиль Google Business' },
     items: [
-      { name: { ka: 'პროფილის შექმნა', en: 'Profile creation', ru: 'Создание профиля' }, price: { ka: '10₾', en: '10₾', ru: '10₾' } },
-      { name: { ka: 'სრულად შევსება', en: 'Full profile fill-out', ru: 'Полное заполнение' }, price: { ka: '20₾', en: '20₾', ru: '20₾' } },
-      { name: { ka: 'ვერიფიკაციის მოთხოვნის გამზადება', en: 'Verification request preparation', ru: 'Подготовка запроса на верификацию' }, price: { ka: '30₾', en: '30₾', ru: '30₾' } },
-      { name: { ka: 'სამივე ერთად (60₾-ის ნაცვლად)', en: 'All three together (instead of 60₾)', ru: 'Все три вместе (вместо 60₾)' }, price: { ka: '50₾', en: '50₾', ru: '50₾' } }
+      { id: 'gbp-create', amount: 10, name: { ka: 'პროფილის შექმნა', en: 'Profile creation', ru: 'Создание профиля' }, price: { ka: '10₾', en: '10₾', ru: '10₾' } },
+      { id: 'gbp-fill', amount: 20, name: { ka: 'სრულად შევსება', en: 'Full profile fill-out', ru: 'Полное заполнение' }, price: { ka: '20₾', en: '20₾', ru: '20₾' } },
+      { id: 'gbp-verify', amount: 30, name: { ka: 'ვერიფიკაციის მოთხოვნის გამზადება', en: 'Verification request preparation', ru: 'Подготовка запроса на верификацию' }, price: { ka: '30₾', en: '30₾', ru: '30₾' } },
+      { id: 'gbp-all', amount: 50, name: { ka: 'სამივე ერთად (60₾-ის ნაცვლად)', en: 'All three together (instead of 60₾)', ru: 'Все три вместе (вместо 60₾)' }, price: { ka: '50₾', en: '50₾', ru: '50₾' } }
     ]
   },
   {
     title: { ka: 'სოციალური ქსელები', en: 'Social media', ru: 'Соцсети' },
     items: [
-      { name: { ka: 'Facebook გვერდის შექმნა და გამზადება (+ 1 პოსტი საჩუქრად)', en: 'Facebook page setup (+ 1 post as a gift)', ru: 'Создание и оформление страницы Facebook (+ 1 пост в подарок)' }, price: { ka: '10₾', en: '10₾', ru: '10₾' } },
-      { name: { ka: 'Instagram გვერდის შექმნა და გამზადება (+ 1 პოსტი საჩუქრად)', en: 'Instagram page setup (+ 1 post as a gift)', ru: 'Создание и оформление страницы Instagram (+ 1 пост в подарок)' }, price: { ka: '10₾', en: '10₾', ru: '10₾' } }
+      { id: 'fb-page', amount: 10, name: { ka: 'Facebook გვერდის შექმნა და გამზადება (+ 1 პოსტი საჩუქრად)', en: 'Facebook page setup (+ 1 post as a gift)', ru: 'Создание и оформление страницы Facebook (+ 1 пост в подарок)' }, price: { ka: '10₾', en: '10₾', ru: '10₾' } },
+      { id: 'ig-page', amount: 10, name: { ka: 'Instagram გვერდის შექმნა და გამზადება (+ 1 პოსტი საჩუქრად)', en: 'Instagram page setup (+ 1 post as a gift)', ru: 'Создание и оформление страницы Instagram (+ 1 пост в подарок)' }, price: { ka: '10₾', en: '10₾', ru: '10₾' } }
     ]
   },
   {
     title: { ka: 'ვებსაიტები', en: 'Websites', ru: 'Сайты' },
     items: [
-      { name: { ka: 'ვებსაიტის აწყობა', en: 'Website build', ru: 'Создание сайта' }, price: { ka: '50₾-დან', en: 'from 50₾', ru: 'от 50₾' } },
-      { name: { ka: 'დომენი (ცალკე)', en: 'Domain (separate)', ru: 'Домен (отдельно)' }, price: { ka: '5₾-დან', en: 'from 5₾', ru: 'от 5₾' } },
-      { name: { ka: 'მენიუს საიტი (QR უფასოდ)', en: 'Menu website (QR code free)', ru: 'Сайт меню (QR-код бесплатно)' }, price: { ka: '50₾-დან', en: 'from 50₾', ru: 'от 50₾' } },
-      { name: { ka: 'ერთჯერადი განახლება (1 ცვლილება)', en: 'One-off update (1 change)', ru: 'Разовое обновление (1 изменение)' }, price: { ka: '15₾', en: '15₾', ru: '15₾' } },
-      { name: { ka: 'ახალი გვერდის/სექციის დამატება', en: 'New page/section', ru: 'Добавление страницы/раздела' }, price: { ka: '20₾-დან', en: 'from 20₾', ru: 'от 20₾' } },
-      { name: { ka: 'დიზაინის სრული შეცვლა', en: 'Full redesign', ru: 'Полная смена дизайна' }, price: { ka: '50₾-დან', en: 'from 50₾', ru: 'от 50₾' } }
+      { id: 'site-build', amount: 50, from: true, name: { ka: 'ვებსაიტის აწყობა', en: 'Website build', ru: 'Создание сайта' }, price: { ka: '50₾-დან', en: 'from 50₾', ru: 'от 50₾' } },
+      { id: 'domain', amount: 5, from: true, name: { ka: 'დომენი (ცალკე)', en: 'Domain (separate)', ru: 'Домен (отдельно)' }, price: { ka: '5₾-დან', en: 'from 5₾', ru: 'от 5₾' } },
+      { id: 'menu-site', amount: 50, from: true, name: { ka: 'მენიუს საიტი (QR უფასოდ)', en: 'Menu website (QR code free)', ru: 'Сайт меню (QR-код бесплатно)' }, price: { ka: '50₾-დან', en: 'from 50₾', ru: 'от 50₾' } },
+      { id: 'site-update', amount: 15, name: { ka: 'ერთჯერადი განახლება (1 ცვლილება)', en: 'One-off update (1 change)', ru: 'Разовое обновление (1 изменение)' }, price: { ka: '15₾', en: '15₾', ru: '15₾' } },
+      { id: 'site-page', amount: 20, from: true, name: { ka: 'ახალი გვერდის/სექციის დამატება', en: 'New page/section', ru: 'Добавление страницы/раздела' }, price: { ka: '20₾-დან', en: 'from 20₾', ru: 'от 20₾' } },
+      { id: 'site-redesign', amount: 50, from: true, name: { ka: 'დიზაინის სრული შეცვლა', en: 'Full redesign', ru: 'Полная смена дизайна' }, price: { ka: '50₾-დან', en: 'from 50₾', ru: 'от 50₾' } }
     ]
   },
   {
     title: { ka: 'დიზაინი და ფოტო', en: 'Design & photos', ru: 'Дизайн и фото' },
     items: [
-      { name: { ka: 'ბიზნესის ლოგო', en: 'Business logo', ru: 'Логотип бизнеса' }, price: { ka: '10₾', en: '10₾', ru: '10₾' } },
-      { name: { ka: 'ბანერი', en: 'Banner', ru: 'Баннер' }, price: { ka: '5₾-დან', en: 'from 5₾', ru: 'от 5₾' } },
-      { name: { ka: 'ფოტოს დამუშავება (1 ფოტო)', en: 'Photo editing (1 photo)', ru: 'Обработка фото (1 фото)' }, price: { ka: '3₾-დან', en: 'from 3₾', ru: 'от 3₾' } }
+      { id: 'logo', amount: 10, name: { ka: 'ბიზნესის ლოგო', en: 'Business logo', ru: 'Логотип бизнеса' }, price: { ka: '10₾', en: '10₾', ru: '10₾' } },
+      { id: 'banner', amount: 5, from: true, name: { ka: 'ბანერი', en: 'Banner', ru: 'Баннер' }, price: { ka: '5₾-დან', en: 'from 5₾', ru: 'от 5₾' } },
+      { id: 'photo-edit', amount: 3, from: true, name: { ka: 'ფოტოს დამუშავება (1 ფოტო)', en: 'Photo editing (1 photo)', ru: 'Обработка фото (1 фото)' }, price: { ka: '3₾-დან', en: 'from 3₾', ru: 'от 3₾' } }
     ]
   },
   {
     title: { ka: 'QR კოდები', en: 'QR codes', ru: 'QR-коды' },
     items: [
-      { name: { ka: 'Wi-Fi QR სტიკერი (კედელზე საკრავი)', en: 'Wi-Fi QR sticker (wall-mounted)', ru: 'Wi-Fi QR-наклейка (на стену)' }, price: { ka: '5₾', en: '5₾', ru: '5₾' } },
-      { name: { ka: 'ვიზიტკის QR (კონტაქტის შენახვა)', en: 'Business-card QR (save contact)', ru: 'QR-визитка (сохранение контакта)' }, price: { ka: '5₾', en: '5₾', ru: '5₾' } }
+      { id: 'qr-wifi', amount: 5, name: { ka: 'Wi-Fi QR სტიკერი (კედელზე საკრავი)', en: 'Wi-Fi QR sticker (wall-mounted)', ru: 'Wi-Fi QR-наклейка (на стену)' }, price: { ka: '5₾', en: '5₾', ru: '5₾' } },
+      { id: 'qr-vcard', amount: 5, name: { ka: 'ვიზიტკის QR (კონტაქტის შენახვა)', en: 'Business-card QR (save contact)', ru: 'QR-визитка (сохранение контакта)' }, price: { ka: '5₾', en: '5₾', ru: '5₾' } }
     ]
   },
   {
     title: { ka: 'WhatsApp და Google პოსტები', en: 'WhatsApp & Google posts', ru: 'WhatsApp и посты в Google' },
     items: [
-      { name: { ka: 'WhatsApp Business-ის დაყენება (მისალმება, ავტო-პასუხები)', en: 'WhatsApp Business setup (greeting, auto-replies)', ru: 'Настройка WhatsApp Business (приветствие, автоответы)' }, price: { ka: '30₾', en: '30₾', ru: '30₾' } },
-      { name: { ka: 'Google პოსტი (1 ცალი)', en: 'Google post (single)', ru: 'Пост в Google (1 шт.)' }, price: { ka: '10₾', en: '10₾', ru: '10₾' } }
+      { id: 'wa-setup', amount: 30, name: { ka: 'WhatsApp Business-ის დაყენება (მისალმება, ავტო-პასუხები)', en: 'WhatsApp Business setup (greeting, auto-replies)', ru: 'Настройка WhatsApp Business (приветствие, автоответы)' }, price: { ka: '30₾', en: '30₾', ru: '30₾' } },
+      { id: 'gpost-one', amount: 10, name: { ka: 'Google პოსტი (1 ცალი)', en: 'Google post (single)', ru: 'Пост в Google (1 шт.)' }, price: { ka: '10₾', en: '10₾', ru: '10₾' } }
     ]
   },
   {
     title: { ka: 'ყოველთვიური მომსახურება', en: 'Monthly services', ru: 'Ежемесячные услуги' },
     items: [
-      { name: { ka: 'შეფასებებზე პასუხები (ინდივიდუალური პასუხი ყოველ შეფასებაზე)', en: 'Review replies (a personal reply to every review)', ru: 'Ответы на отзывы (личный ответ на каждый отзыв)' }, price: { ka: '30₾/თვე', en: '30₾/mo', ru: '30₾/мес' } },
-      { name: { ka: 'Google პოსტები (4 პოსტი თვეში)', en: 'Google posts (4 posts a month)', ru: 'Посты в Google (4 поста в месяц)' }, price: { ka: '25₾/თვე', en: '25₾/mo', ru: '25₾/мес' } },
-      { name: { ka: 'საიტის მოვლა (განახლებები, შემოწმება, დომენის კონტროლი)', en: 'Website care (updates, checks, domain watch)', ru: 'Обслуживание сайта (обновления, проверка, контроль домена)' }, price: { ka: '25₾/თვე', en: '25₾/mo', ru: '25₾/мес' } }
+      { id: 'm-reviews', amount: 30, monthly: true, name: { ka: 'შეფასებებზე პასუხები (ინდივიდუალური პასუხი ყოველ შეფასებაზე)', en: 'Review replies (a personal reply to every review)', ru: 'Ответы на отзывы (личный ответ на каждый отзыв)' }, price: { ka: '30₾/თვე', en: '30₾/mo', ru: '30₾/мес' } },
+      { id: 'm-posts', amount: 25, monthly: true, name: { ka: 'Google პოსტები (4 პოსტი თვეში)', en: 'Google posts (4 posts a month)', ru: 'Посты в Google (4 поста в месяц)' }, price: { ka: '25₾/თვე', en: '25₾/mo', ru: '25₾/мес' } },
+      { id: 'm-care', amount: 25, monthly: true, name: { ka: 'საიტის მოვლა (განახლებები, შემოწმება, დომენის კონტროლი)', en: 'Website care (updates, checks, domain watch)', ru: 'Обслуживание сайта (обновления, проверка, контроль домена)' }, price: { ka: '25₾/თვე', en: '25₾/mo', ru: '25₾/мес' } }
     ],
     note: { ka: 'ცალ-ცალკე იყიდება, პაკეტის ფასდაკლების გარეშე.', en: 'Sold separately, no bundle discount.', ru: 'Продаются отдельно, без скидки за пакет.' }
   },
   {
     title: { ka: 'სასწრაფო გამოძახება', en: 'Emergency callout', ru: 'Срочный выезд' },
     items: [
-      { name: { ka: 'გამოძახება 10:00–18:00', en: 'Callout 10:00–18:00', ru: 'Выезд 10:00–18:00' }, price: { ka: '20₾', en: '20₾', ru: '20₾' } },
-      { name: { ka: 'გამოძახება 24/7', en: 'Callout 24/7', ru: 'Выезд 24/7' }, price: { ka: '30₾', en: '30₾', ru: '30₾' } }
+      { id: 'call-day', amount: 20, name: { ka: 'გამოძახება 10:00–18:00', en: 'Callout 10:00–18:00', ru: 'Выезд 10:00–18:00' }, price: { ka: '20₾', en: '20₾', ru: '20₾' } },
+      { id: 'call-247', amount: 30, name: { ka: 'გამოძახება 24/7', en: 'Callout 24/7', ru: 'Выезд 24/7' }, price: { ka: '30₾', en: '30₾', ru: '30₾' } }
     ],
     note: { ka: 'მარტივი გასწორება (30 წუთამდე) ფასში შედის. 30 წუთზე მეტი — სხვა ფასი, გასაკეთებელზეა დამოკიდებული.', en: 'A simple fix (up to 30 minutes) is included. Longer work is priced separately, depending on the job.', ru: 'Простое исправление (до 30 минут) включено. Более долгая работа оплачивается отдельно, в зависимости от задачи.' }
   },
   {
     title: { ka: 'VIP მომსახურება', en: 'VIP service', ru: 'VIP-обслуживание' },
     items: [
-      { name: { ka: 'VIP 1 — 10:00–18:00, 10 ვიზიტამდე', en: 'VIP 1 — 10:00–18:00, up to 10 visits', ru: 'VIP 1 — 10:00–18:00, до 10 визитов' }, price: { ka: '99₾/თვე', en: '99₾/mo', ru: '99₾/мес' } },
-      { name: { ka: 'VIP 2 — 24/7, 20 ვიზიტამდე', en: 'VIP 2 — 24/7, up to 20 visits', ru: 'VIP 2 — 24/7, до 20 визитов' }, price: { ka: '149₾/თვე', en: '149₾/mo', ru: '149₾/мес' } }
+      { id: 'vip1', amount: 99, monthly: true, name: { ka: 'VIP 1 — 10:00–18:00, 10 ვიზიტამდე', en: 'VIP 1 — 10:00–18:00, up to 10 visits', ru: 'VIP 1 — 10:00–18:00, до 10 визитов' }, price: { ka: '99₾/თვე', en: '99₾/mo', ru: '99₾/мес' } },
+      { id: 'vip2', amount: 149, monthly: true, name: { ka: 'VIP 2 — 24/7, 20 ვიზიტამდე', en: 'VIP 2 — 24/7, up to 20 visits', ru: 'VIP 2 — 24/7, до 20 визитов' }, price: { ka: '149₾/თვე', en: '149₾/mo', ru: '149₾/мес' } }
     ],
     note: { ka: 'მხოლოდ ახალციხეში. VIP 1-ით ზოგავთ 101₾-ს, VIP 2-ით — 451₾-ს თვეში.', en: 'Akhaltsikhe only. VIP 1 saves you 101₾ a month, VIP 2 saves 451₾.', ru: 'Только в Ахалцихе. VIP 1 экономит 101₾ в месяц, VIP 2 — 451₾.' }
   }
@@ -175,7 +175,9 @@ function servicesGroupsHtml() {
     var g = SERVICES[gi];
     html += '<div class="service-group"><h3>' + esc(g.title[lang]) + '</h3><ul class="service-list">';
     for (var ii = 0; ii < g.items.length; ii++) {
-      html += '<li><span>' + esc(g.items[ii].name[lang]) + '</span><strong>' + esc(g.items[ii].price[lang]) + '</strong></li>';
+      var item = g.items[ii];
+      html += '<li><span>' + esc(item.name[lang]) + '</span><span class="service-side"><strong>' + esc(item.price[lang]) + '</strong>' +
+        '<button class="service-add" type="button" data-add-service="' + item.id + '" aria-label="' + esc(t('addToCart')) + '">+</button></span></li>';
     }
     html += '</ul>';
     if (g.note) html += '<p class="service-note">' + esc(g.note[lang]) + '</p>';
@@ -240,6 +242,11 @@ var I18N = {
     emptyCart: 'თქვენი კალათა ცარიელია',
     viewProducts: 'პროდუქტების ნახვა',
     total: 'ჯამი',
+    totalOnce: 'ერთჯერადი ჯამი',
+    totalMonthly: 'ყოველთვიური ჯამი',
+    fromPriceNote: 'საბოლოო ფასი შეთანხმებით.',
+    toastServiceAdded: 'სერვისი დაემატა კალათაში',
+    optionalHint: '(არასავალდებულო)',
     remove: 'წაშლა',
     formTitle: 'შეკვეთის გაფორმება',
     fName: 'სახელი და გვარი',
@@ -317,6 +324,11 @@ var I18N = {
     emptyCart: 'Your cart is empty',
     viewProducts: 'View products',
     total: 'Total',
+    totalOnce: 'One-time total',
+    totalMonthly: 'Monthly total',
+    fromPriceNote: 'Final price to be agreed.',
+    toastServiceAdded: 'Service added to cart',
+    optionalHint: '(optional)',
     remove: 'Remove',
     formTitle: 'Checkout',
     fName: 'Full name',
@@ -394,6 +406,11 @@ var I18N = {
     emptyCart: 'Ваша корзина пуста',
     viewProducts: 'Смотреть продукты',
     total: 'Итого',
+    totalOnce: 'Разовый итог',
+    totalMonthly: 'Ежемесячный итог',
+    fromPriceNote: 'Итоговая цена — по договорённости.',
+    toastServiceAdded: 'Услуга добавлена в корзину',
+    optionalHint: '(необязательно)',
     remove: 'Удалить',
     formTitle: 'Оформление заказа',
     fName: 'Имя и фамилия',
@@ -432,6 +449,19 @@ if (!I18N[lang]) lang = 'ka';
 
 var cart = {};
 try { cart = JSON.parse(storeGet('locallink-cart') || '{}') || {}; } catch (e) { cart = {}; }
+/* Cart entries are { kind: 'product' | 'service', qty: n }, keyed by product
+   slug or service id. Old saved carts stored a bare number per slug — those
+   are products, normalized here so old and new formats behave the same. */
+for (var ck in cart) {
+  var cv = cart[ck];
+  if (typeof cv === 'number') {
+    cart[ck] = { kind: 'product', qty: cv };
+  } else if (cv && typeof cv === 'object' && typeof cv.qty === 'number') {
+    if (cv.kind !== 'service') cv.kind = 'product';
+  } else {
+    delete cart[ck];
+  }
+}
 var query = '';
 var stockData = null; /* null = stock API unreachable or not loaded yet: no stock lines shown */
 
@@ -446,19 +476,63 @@ function productBySlug(slug) {
   for (var i = 0; i < PRODUCTS.length; i++) if (PRODUCTS[i].slug === slug) return PRODUCTS[i];
   return null;
 }
+function serviceById(id) {
+  for (var gi = 0; gi < SERVICES.length; gi++) {
+    var items = SERVICES[gi].items;
+    for (var ii = 0; ii < items.length; ii++) if (items[ii].id === id) return items[ii];
+  }
+  return null;
+}
+function entryQty(e) {
+  if (typeof e === 'number') return e;
+  return (e && typeof e.qty === 'number') ? e.qty : 0;
+}
+function entryKind(e) {
+  return (e && typeof e === 'object' && e.kind === 'service') ? 'service' : 'product';
+}
 function saveCart() { storeSet('locallink-cart', JSON.stringify(cart)); }
 function cartCount() {
   var n = 0;
-  for (var k in cart) n += cart[k];
+  for (var k in cart) n += entryQty(cart[k]);
   return n;
 }
-function cartTotal() {
-  var sum = 0;
+/* Split totals: one-time (products + one-time services) vs monthly.
+   hasFrom is true when a "from" price service is in the cart. */
+function cartTotals() {
+  var once = 0, monthly = 0, hasMonthly = false, hasFrom = false;
   for (var k in cart) {
-    var p = productBySlug(k);
-    if (p) sum += p.price * cart[k];
+    var qty = entryQty(cart[k]);
+    if (qty <= 0) continue;
+    if (entryKind(cart[k]) === 'service') {
+      var svc = serviceById(k);
+      if (!svc) continue;
+      if (svc.monthly) { monthly += svc.amount * qty; hasMonthly = true; }
+      else once += svc.amount * qty;
+      if (svc.from) hasFrom = true;
+    } else {
+      var p = productBySlug(k);
+      if (p) once += p.price * qty;
+    }
   }
-  return sum;
+  return { once: once, monthly: monthly, hasMonthly: hasMonthly, hasFrom: hasFrom };
+}
+function cartProductKeys() {
+  return Object.keys(cart).filter(function (k) { return entryQty(cart[k]) > 0 && entryKind(cart[k]) === 'product' && productBySlug(k); });
+}
+function cartServiceKeys() {
+  return Object.keys(cart).filter(function (k) { return entryQty(cart[k]) > 0 && entryKind(cart[k]) === 'service' && serviceById(k); });
+}
+/* Localized price display for a service at a given quantity. Reuses the
+   approved per-language price string, replacing its number with the
+   quantity total — so "50₾-დან" / "from 50₾" / "от 50₾" stay correct.
+   useLang overrides the current language (the inbox email is Georgian). */
+function servicePriceForQty(svc, qty, useLang) {
+  var l = useLang || lang;
+  var base = svc.price[l] || svc.price.ka;
+  var total = svc.amount * qty;
+  if (qty === 1) return base;
+  if (/\d/.test(base)) return base.replace(/\d+/, String(total));
+  return base;
 }
 
 /* ---------- chrome (topbar, nav, footer, badge) ---------- */
@@ -720,46 +794,94 @@ function productView(slug) {
 }
 
 function cartView() {
-  var keys = Object.keys(cart).filter(function (k) { return cart[k] > 0 && productBySlug(k); });
-  if (!keys.length) {
+  var pKeys = cartProductKeys();
+  var sKeys = cartServiceKeys();
+  if (!pKeys.length && !sKeys.length) {
     return '<div class="page"><div class="container"><div class="empty-cart">' +
       '<div class="empty-icon" aria-hidden="true">🛒</div>' +
       '<p>' + esc(t('emptyCart')) + '</p>' +
       '<a class="btn" href="#/" data-section="products">' + esc(t('viewProducts')) + '</a>' +
     '</div></div></div>';
   }
-  var rows = keys.map(function (slug) {
-    var p = productBySlug(slug);
-    var qty = cart[slug];
-    return '<div class="cart-row">' +
-      '<a href="#/product/' + p.slug + '"><img src="' + p.img + '" alt="' + esc(p.name[lang]) + '"></a>' +
-      '<div>' +
-        '<h3><a href="#/product/' + p.slug + '">' + esc(p.name[lang]) + '</a></h3>' +
-        '<p class="unit">' + price(p.price) + '</p>' +
-        '<div class="qty qty-sm">' +
-          '<button type="button" data-cart-dec="' + p.slug + '" aria-label="−">−</button>' +
-          '<span>' + qty + '</span>' +
-          '<button type="button" data-cart-inc="' + p.slug + '" aria-label="+">+</button>' +
+  var mixed = pKeys.length > 0 && sKeys.length > 0;
+  var totals = cartTotals();
+  var itemsHtml = '';
+  if (pKeys.length) {
+    if (mixed) itemsHtml += '<h2 class="cart-section-title">' + esc(t('catalogTitle')) + '</h2>';
+    itemsHtml += pKeys.map(function (slug) {
+      var p = productBySlug(slug);
+      var qty = entryQty(cart[slug]);
+      return '<div class="cart-row">' +
+        '<a href="#/product/' + p.slug + '"><img src="' + p.img + '" alt="' + esc(p.name[lang]) + '"></a>' +
+        '<div>' +
+          '<h3><a href="#/product/' + p.slug + '">' + esc(p.name[lang]) + '</a></h3>' +
+          '<p class="unit">' + price(p.price) + '</p>' +
+          '<div class="qty qty-sm">' +
+            '<button type="button" data-cart-dec="' + p.slug + '" aria-label="−">−</button>' +
+            '<span>' + qty + '</span>' +
+            '<button type="button" data-cart-inc="' + p.slug + '" aria-label="+">+</button>' +
+          '</div>' +
+          '<button class="remove-btn" type="button" data-cart-remove="' + p.slug + '">' + esc(t('remove')) + '</button>' +
         '</div>' +
-        '<button class="remove-btn" type="button" data-cart-remove="' + p.slug + '">' + esc(t('remove')) + '</button>' +
-      '</div>' +
-      '<div class="line-total">' + price(p.price * qty) + '</div>' +
-    '</div>';
-  }).join('');
+        '<div class="line-total">' + price(p.price * qty) + '</div>' +
+      '</div>';
+    }).join('');
+  }
+  if (sKeys.length) {
+    if (mixed) itemsHtml += '<h2 class="cart-section-title">' + esc(t('navServices')) + '</h2>';
+    itemsHtml += sKeys.map(function (id) {
+      var svc = serviceById(id);
+      var qty = entryQty(cart[id]);
+      var qtyHtml = '';
+      if (id === 'photo-edit') {
+        qtyHtml = '<div class="qty qty-sm">' +
+          '<button type="button" data-cart-dec="' + id + '" aria-label="−">−</button>' +
+          '<span>' + qty + '</span>' +
+          '<button type="button" data-cart-inc="' + id + '" aria-label="+">+</button>' +
+        '</div>';
+      }
+      return '<div class="cart-row cart-row-service">' +
+        '<div>' +
+          '<h3>' + esc(svc.name[lang]) + '</h3>' +
+          '<p class="unit">' + esc(servicePriceForQty(svc, 1)) + '</p>' +
+          qtyHtml +
+          '<button class="remove-btn" type="button" data-cart-remove="' + id + '">' + esc(t('remove')) + '</button>' +
+        '</div>' +
+        '<div class="line-total">' + esc(servicePriceForQty(svc, qty)) + '</div>' +
+      '</div>';
+    }).join('');
+  }
+  var totalsHtml = '';
+  if (!sKeys.length) {
+    totalsHtml = '<div class="cart-total-row"><span>' + esc(t('total')) + '</span><span>' + price(totals.once) + '</span></div>';
+  } else {
+    if (totals.once > 0 || !totals.hasMonthly) {
+      totalsHtml += '<div class="cart-total-row"><span>' + esc(t('totalOnce')) + '</span><span>' + price(totals.once) + '</span></div>';
+    }
+    if (totals.hasMonthly) {
+      totalsHtml += '<div class="cart-total-row"><span>' + esc(t('totalMonthly')) + '</span><span>' + price(totals.monthly) + '</span></div>';
+    }
+    if (totals.hasFrom) {
+      totalsHtml += '<p class="from-note">' + esc(t('fromPriceNote')) + '</p>';
+    }
+  }
+  /* City/address are required only when products are in the cart — a
+     services-only order needs no delivery address. */
+  var hasProducts = pKeys.length > 0;
+  var reqAttr = hasProducts ? ' required' : '';
+  var optSuffix = hasProducts ? '' : ' ' + esc(t('optionalHint'));
 
   return '<div class="page"><div class="container">' +
     '<h1 class="page-title">' + esc(t('cartTitle')) + '</h1>' +
     '<div class="cart-layout">' +
-      '<div class="cart-items">' + rows +
-        '<div class="cart-total-row"><span>' + esc(t('total')) + '</span><span>' + price(cartTotal()) + '</span></div>' +
-      '</div>' +
+      '<div class="cart-items">' + itemsHtml + totalsHtml + '</div>' +
       '<form class="order-form" id="order-form" novalidate>' +
         '<h2>' + esc(t('formTitle')) + '</h2>' +
         '<input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden">' +
         '<div class="field"><label for="f-name">' + esc(t('fName')) + '</label><input id="f-name" name="name" type="text" autocomplete="name" required></div>' +
         '<div class="field"><label for="f-phone">' + esc(t('fPhone')) + '</label><input id="f-phone" name="phone" type="tel" autocomplete="tel" required></div>' +
-        '<div class="field"><label for="f-city">' + esc(t('fCity')) + '</label><input id="f-city" name="city" type="text" autocomplete="address-level2" required></div>' +
-        '<div class="field"><label for="f-address">' + esc(t('fAddress')) + '</label><input id="f-address" name="address" type="text" autocomplete="street-address" required></div>' +
+        '<div class="field"><label for="f-city">' + esc(t('fCity')) + optSuffix + '</label><input id="f-city" name="city" type="text" autocomplete="address-level2"' + reqAttr + '></div>' +
+        '<div class="field"><label for="f-address">' + esc(t('fAddress')) + optSuffix + '</label><input id="f-address" name="address" type="text" autocomplete="street-address"' + reqAttr + '></div>' +
         '<div class="field"><label for="f-comment">' + esc(t('fComment')) + '</label><textarea id="f-comment" name="comment" rows="3"></textarea></div>' +
         '<p class="cash-note">' + esc(t('cashNote')) + '</p>' +
         '<p class="send-choice-label">' + esc(t('sendChoice')) + '</p>' +
@@ -817,10 +939,27 @@ function scrollToSection(id) {
 /* ---------- cart actions ---------- */
 
 function addToCart(slug, qty) {
-  cart[slug] = (cart[slug] || 0) + qty;
+  var e = cart[slug];
+  if (e && typeof e === 'object') {
+    e.qty = entryQty(e) + qty;
+  } else if (typeof e === 'number') {
+    cart[slug] = { kind: 'product', qty: e + qty };
+  } else {
+    cart[slug] = { kind: 'product', qty: qty };
+  }
   saveCart();
   updateBadge();
   showToast(t('toastAdded'));
+}
+
+/* Services have a fixed quantity of 1 (photo-edit quantity is adjusted in
+   the cart). Adding a service that is already in the cart is a no-op. */
+function addServiceToCart(id) {
+  if (!serviceById(id)) return;
+  if (!cart[id]) cart[id] = { kind: 'service', qty: 1 };
+  saveCart();
+  updateBadge();
+  showToast(t('toastServiceAdded'));
 }
 
 function bindProductPage() {
@@ -849,42 +988,76 @@ function orderFormValues(form) {
   };
 }
 
-/* WhatsApp text in the customer's language. */
-function buildOrderLines(keys, v) {
+/* WhatsApp text in the customer's language. Products-only orders keep the
+   exact previous format; orders with services list both groups with the
+   split totals and the from-price note. */
+function buildOrderLines(pKeys, sKeys, v) {
+  var totals = cartTotals();
   var lines = [t('orderTitle'), ''];
-  keys.forEach(function (slug, i) {
+  var n = 0;
+  pKeys.forEach(function (slug) {
     var p = productBySlug(slug);
-    lines.push((i + 1) + '. ' + p.name[lang] + ' × ' + cart[slug] + ' — ' + price(p.price * cart[slug]));
+    lines.push((++n) + '. ' + p.name[lang] + ' × ' + entryQty(cart[slug]) + ' — ' + price(p.price * entryQty(cart[slug])));
   });
-  lines.push('', t('total') + ': ' + price(cartTotal()), '');
+  if (sKeys.length) {
+    if (pKeys.length) lines.push('');
+    lines.push(t('navServices') + ':');
+    sKeys.forEach(function (id) {
+      var svc = serviceById(id);
+      var qty = entryQty(cart[id]);
+      lines.push((++n) + '. ' + svc.name[lang] + (qty > 1 ? ' × ' + qty : '') + ' — ' + servicePriceForQty(svc, qty));
+    });
+  }
+  lines.push('');
+  if (!sKeys.length) {
+    lines.push(t('total') + ': ' + price(totals.once));
+  } else {
+    if (totals.once > 0 || !totals.hasMonthly) lines.push(t('totalOnce') + ': ' + price(totals.once));
+    if (totals.hasMonthly) lines.push(t('totalMonthly') + ': ' + price(totals.monthly));
+    if (totals.hasFrom) lines.push(t('fromPriceNote'));
+  }
+  lines.push('');
   lines.push(t('fName') + ': ' + v.name);
   lines.push(t('fPhone') + ': ' + v.phone);
-  lines.push(t('fCity') + ': ' + v.city);
-  lines.push(t('fAddress') + ': ' + v.address);
+  if (v.city) lines.push(t('fCity') + ': ' + v.city);
+  if (v.address) lines.push(t('fAddress') + ': ' + v.address);
   if (v.comment) lines.push(t('fCommentShort') + ': ' + v.comment);
   lines.push(t('orderPayment'));
   return lines;
 }
 
 /* Email fields with fixed Georgian labels — the inbox owner reads Georgian. */
-function buildEmailFields(keys, v) {
-  var items = keys.map(function (slug, i) {
-    var p = productBySlug(slug);
-    return (i + 1) + '. ' + p.name.ka + ' × ' + cart[slug] + ' — ' + price(p.price * cart[slug]);
-  });
-  var fields = {
-    '_subject': 'ახალი შეკვეთა — locallink',
-    'პროდუქტები': items.join('\n'),
-    'ჯამი': price(cartTotal()),
-    'სახელი და გვარი': v.name,
-    'ტელეფონი': v.phone,
-    'ქალაქი': v.city,
-    'მისამართი': v.address,
-    'გადახდა': 'ნაღდი ანგარიშსწორება',
-    '_template': 'table',
-    '_captcha': 'false',
-    '_honey': v.honey || ''
-  };
+function buildEmailFields(pKeys, sKeys, v) {
+  var totals = cartTotals();
+  var fields = { '_subject': 'ახალი შეკვეთა — locallink' };
+  if (pKeys.length) {
+    fields['პროდუქტები'] = pKeys.map(function (slug, i) {
+      var p = productBySlug(slug);
+      return (i + 1) + '. ' + p.name.ka + ' × ' + entryQty(cart[slug]) + ' — ' + price(p.price * entryQty(cart[slug]));
+    }).join('\n');
+  }
+  if (sKeys.length) {
+    fields['სერვისები'] = sKeys.map(function (id, i) {
+      var svc = serviceById(id);
+      var qty = entryQty(cart[id]);
+      return (i + 1) + '. ' + svc.name.ka + (qty > 1 ? ' × ' + qty : '') + ' — ' + servicePriceForQty(svc, qty, 'ka');
+    }).join('\n');
+  }
+  if (!sKeys.length) {
+    fields['ჯამი'] = price(totals.once);
+  } else {
+    if (totals.once > 0 || !totals.hasMonthly) fields['ერთჯერადი ჯამი'] = price(totals.once);
+    if (totals.hasMonthly) fields['ყოველთვიური ჯამი'] = price(totals.monthly);
+    if (totals.hasFrom) fields['შენიშვნა'] = 'საბოლოო ფასი შეთანხმებით.';
+  }
+  fields['სახელი და გვარი'] = v.name;
+  fields['ტელეფონი'] = v.phone;
+  if (v.city) fields['ქალაქი'] = v.city;
+  if (v.address) fields['მისამართი'] = v.address;
+  fields['გადახდა'] = 'ნაღდი ანგარიშსწორება';
+  fields['_template'] = 'table';
+  fields['_captcha'] = 'false';
+  fields['_honey'] = v.honey || '';
   if (v.comment) fields['კომენტარი'] = v.comment;
   return fields;
 }
@@ -897,7 +1070,7 @@ function finishOrder(bodyKey) {
   renderView();
 }
 
-function sendOrderByEmail(form, keys, v) {
+function sendOrderByEmail(form, pKeys, sKeys, v) {
   var buttons = form.querySelectorAll('[data-send]');
   var emailBtn = form.querySelector('[data-send="email"]');
   var err = document.getElementById('form-error');
@@ -908,7 +1081,7 @@ function sendOrderByEmail(form, keys, v) {
   fetch(FORMSUBMIT_URL, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-    body: JSON.stringify(buildEmailFields(keys, v))
+    body: JSON.stringify(buildEmailFields(pKeys, sKeys, v))
   }).then(function (res) {
     if (!res.ok) throw new Error('formsubmit http ' + res.status);
     finishOrder('popupBodyEmail');
@@ -931,14 +1104,15 @@ function bindCartPage() {
   form.addEventListener('submit', function (e) {
     e.preventDefault();
     if (!form.checkValidity()) { form.reportValidity(); return; }
-    var keys = Object.keys(cart).filter(function (k) { return cart[k] > 0 && productBySlug(k); });
-    if (!keys.length) return;
+    var pKeys = cartProductKeys();
+    var sKeys = cartServiceKeys();
+    if (!pKeys.length && !sKeys.length) return;
     var v = orderFormValues(form);
     if (channel === 'whatsapp') {
-      window.open(WA_URL + '?text=' + encodeURIComponent(buildOrderLines(keys, v).join('\n')), '_blank');
+      window.open(WA_URL + '?text=' + encodeURIComponent(buildOrderLines(pKeys, sKeys, v).join('\n')), '_blank');
       finishOrder('popupBody');
     } else {
-      sendOrderByEmail(form, keys, v);
+      sendOrderByEmail(form, pKeys, sKeys, v);
     }
   });
 }
@@ -959,18 +1133,34 @@ document.addEventListener('click', function (e) {
     addToCart(addBtn.getAttribute('data-add'), parseInt(addBtn.getAttribute('data-add-qty') || '1', 10) || 1);
     return;
   }
+  var addSvcBtn = e.target.closest('[data-add-service]');
+  if (addSvcBtn) {
+    addServiceToCart(addSvcBtn.getAttribute('data-add-service'));
+    return;
+  }
   var inc = e.target.closest('[data-cart-inc]');
   if (inc) {
     var s1 = inc.getAttribute('data-cart-inc');
-    if (cart[s1] < 99) cart[s1]++;
+    var e1 = cart[s1];
+    if (e1 && typeof e1 === 'object') {
+      if (e1.qty < 99) e1.qty++;
+    } else if (typeof e1 === 'number') {
+      cart[s1] = { kind: 'product', qty: Math.min(99, e1 + 1) };
+    }
     saveCart(); updateBadge(); renderView();
     return;
   }
   var dec = e.target.closest('[data-cart-dec]');
   if (dec) {
     var s2 = dec.getAttribute('data-cart-dec');
-    cart[s2]--;
-    if (cart[s2] <= 0) delete cart[s2];
+    var e2 = cart[s2];
+    if (e2 && typeof e2 === 'object') {
+      e2.qty--;
+      if (e2.qty <= 0) delete cart[s2];
+    } else if (typeof e2 === 'number') {
+      if (e2 <= 1) delete cart[s2];
+      else cart[s2] = { kind: 'product', qty: e2 - 1 };
+    }
     saveCart(); updateBadge(); renderView();
     return;
   }
