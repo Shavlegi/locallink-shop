@@ -12,6 +12,7 @@ var PHONE_LINK = 'tel:+995597777619';
 var EMAIL = 'locallink.ge@gmail.com';
 var FORMSUBMIT_URL = 'https://formsubmit.co/ajax/' + EMAIL;
 var SITE_URL = 'https://locallink.store/';
+var STOCK_API_URL = 'https://locallink-stock.shao42ia.workers.dev/api/stock';
 
 var PRODUCTS = [
   {
@@ -108,6 +109,9 @@ var I18N = {
     details: 'დეტალურად',
     addToCart: 'კალათაში დამატება',
     freeDelivery: 'უფასო მიწოდება',
+    stockIn: 'მარაგშია: {n} ცალი',
+    stockOut: 'მარაგი ამოწურულია',
+    stockIncoming: 'მალე დაემატება: {n} ცალი',
     noResults: 'ვერაფერი მოიძებნა.',
     whyTitle: 'რატომ ჩვენ?',
     why1t: 'უფასო მიწოდება და მონტაჟი',
@@ -186,6 +190,9 @@ var I18N = {
     details: 'Details',
     addToCart: 'Add to cart',
     freeDelivery: 'Free delivery',
+    stockIn: 'In stock: {n} pcs',
+    stockOut: 'Out of stock',
+    stockIncoming: 'Coming soon: {n} pcs',
     noResults: 'Nothing found.',
     whyTitle: 'Why us?',
     why1t: 'Free delivery and installation',
@@ -264,6 +271,9 @@ var I18N = {
     details: 'Подробнее',
     addToCart: 'В корзину',
     freeDelivery: 'Бесплатная доставка',
+    stockIn: 'В наличии: {n} шт.',
+    stockOut: 'Нет в наличии',
+    stockIncoming: 'Скоро поступит: {n} шт.',
     noResults: 'Ничего не найдено.',
     whyTitle: 'Почему мы?',
     why1t: 'Бесплатная доставка и установка',
@@ -343,6 +353,7 @@ if (!I18N[lang]) lang = 'ka';
 var cart = {};
 try { cart = JSON.parse(storeGet('locallink-cart') || '{}') || {}; } catch (e) { cart = {}; }
 var query = '';
+var stockData = null; /* null = stock API unreachable or not loaded yet: no stock lines shown */
 
 function t(key) {
   return (I18N[lang] && I18N[lang][key]) || I18N.ka[key] || key;
@@ -479,6 +490,7 @@ function cardHtml(p) {
       '<h3><a href="#/product/' + p.slug + '">' + esc(p.name[lang]) + '</a></h3>' +
       '<p class="price">' + price(p.price) + '</p>' +
       '<p class="desc">' + esc(p.desc[lang]) + '</p>' +
+      '<div class="stock-lines" data-stock-for="' + p.slug + '"></div>' +
       '<div class="card-actions">' +
         '<a class="btn btn-outline" href="#/product/' + p.slug + '">' + esc(t('details')) + '</a>' +
         '<button class="btn" type="button" data-add="' + p.slug + '">' + esc(t('addToCart')) + '</button>' +
@@ -502,6 +514,47 @@ function renderCatalog() {
   grid.innerHTML = list.length
     ? list.map(cardHtml).join('')
     : '<p class="empty-results">' + esc(t('noResults')) + '</p>';
+  applyStock();
+}
+
+/* ---------- stock (Cloudflare Worker API, display only) ---------- */
+
+function loadStock() {
+  if (typeof fetch !== 'function') return;
+  fetch(STOCK_API_URL, { headers: { 'Accept': 'application/json' } }).then(function (res) {
+    if (!res.ok) throw new Error('stock http ' + res.status);
+    return res.json();
+  }).then(function (data) {
+    if (data && typeof data === 'object') {
+      stockData = data;
+      applyStock();
+    }
+  }).catch(function () { /* stock lines stay hidden — graceful degradation */ });
+}
+
+function stockLinesHtml(slug) {
+  if (!stockData) return '';
+  var e = stockData[slug];
+  if (!e || typeof e !== 'object') return '';
+  var s = (typeof e.stock === 'number' && isFinite(e.stock)) ? Math.max(0, Math.floor(e.stock)) : null;
+  var inc = (typeof e.incoming === 'number' && isFinite(e.incoming)) ? Math.max(0, Math.floor(e.incoming)) : null;
+  var out = '';
+  if (s !== null) {
+    out += s > 0
+      ? '<span class="stock-line">' + esc(t('stockIn').replace('{n}', String(s))) + '</span>'
+      : '<span class="stock-line stock-line-out">' + esc(t('stockOut')) + '</span>';
+  }
+  if (inc !== null && inc > 0) {
+    out += '<span class="stock-line">' + esc(t('stockIncoming').replace('{n}', String(inc))) + '</span>';
+  }
+  return out;
+}
+
+function applyStock() {
+  var els = document.querySelectorAll('[data-stock-for]');
+  for (var i = 0; i < els.length; i++) {
+    els[i].innerHTML = stockLinesHtml(els[i].getAttribute('data-stock-for'));
+  }
 }
 
 /* ---------- views ---------- */
@@ -576,6 +629,7 @@ function productView(slug) {
         '<h1>' + esc(p.name[lang]) + '</h1>' +
         '<p class="price">' + price(p.price) + '</p>' +
         '<p class="desc">' + esc(p.desc[lang]) + '</p>' +
+        '<div class="stock-lines" data-stock-for="' + p.slug + '"></div>' +
         '<span class="badge badge-static">' + esc(t('freeDelivery')) + '</span>' +
         '<div class="qty-row"><span>' + esc(t('quantity')) + '</span>' +
           '<div class="qty">' +
@@ -666,6 +720,7 @@ function renderView() {
     app.innerHTML = homeView();
     renderCatalog();
   }
+  applyStock();
   window.scrollTo(0, 0);
 }
 
@@ -874,3 +929,4 @@ window.addEventListener('hashchange', renderView);
 
 renderChrome();
 renderView();
+loadStock();

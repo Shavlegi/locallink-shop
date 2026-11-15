@@ -207,6 +207,10 @@ input, textarea { font: inherit; }
 .card-body h3 a:hover { color: var(--accent); }
 .price { font-size: 19px; font-weight: 800; margin: 0; }
 .desc { color: var(--muted); font-size: 14px; margin: 0; flex: 1; }
+.stock-lines { display: grid; gap: 2px; font-size: 13px; color: var(--muted); }
+.stock-lines:empty { display: none; }
+.stock-line-out { color: #ff9a9a; }
+.p-info .stock-lines { font-size: 15px; margin-bottom: 16px; }
 .card-actions { display: flex; gap: 8px; margin-top: 8px; }
 .card-actions .btn { flex: 1; padding: 10px 8px; font-size: 14px; }
 .empty-results { color: var(--muted); padding: 32px 0; text-align: center; grid-column: 1 / -1; }
