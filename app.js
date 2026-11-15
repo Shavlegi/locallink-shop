@@ -680,6 +680,7 @@ function cartView() {
       '</div>' +
       '<form class="order-form" id="order-form" novalidate>' +
         '<h2>' + esc(t('formTitle')) + '</h2>' +
+        '<input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden">' +
         '<div class="field"><label for="f-name">' + esc(t('fName')) + '</label><input id="f-name" name="name" type="text" autocomplete="name" required></div>' +
         '<div class="field"><label for="f-phone">' + esc(t('fPhone')) + '</label><input id="f-phone" name="phone" type="tel" autocomplete="tel" required></div>' +
         '<div class="field"><label for="f-city">' + esc(t('fCity')) + '</label><input id="f-city" name="city" type="text" autocomplete="address-level2" required></div>' +
@@ -701,7 +702,15 @@ function cartView() {
 
 function currentRoute() {
   var h = location.hash.replace(/^#/, '');
-  if (h.indexOf('/product/') === 0) return { name: 'product', slug: decodeURIComponent(h.slice(9)) };
+  if (h.indexOf('/product/') === 0) {
+    var slug;
+    try {
+      slug = decodeURIComponent(h.slice(9));
+    } catch (e) {
+      return { name: 'home' }; /* malformed hash — fall back to home */
+    }
+    return { name: 'product', slug: slug };
+  }
   if (h === '/cart') return { name: 'cart' };
   return { name: 'home' };
 }
@@ -754,12 +763,14 @@ function bindProductPage() {
 }
 
 function orderFormValues(form) {
+  var honeyField = form.querySelector('input[name="_honey"]');
   return {
     name: form.name.value.trim(),
     phone: form.phone.value.trim(),
     city: form.city.value.trim(),
     address: form.address.value.trim(),
-    comment: form.comment.value.trim()
+    comment: form.comment.value.trim(),
+    honey: honeyField ? honeyField.value : ''
   };
 }
 
@@ -796,7 +807,8 @@ function buildEmailFields(keys, v) {
     'მისამართი': v.address,
     'გადახდა': 'ნაღდი ანგარიშსწორება',
     '_template': 'table',
-    '_captcha': 'false'
+    '_captcha': 'false',
+    '_honey': v.honey || ''
   };
   if (v.comment) fields['კომენტარი'] = v.comment;
   return fields;
