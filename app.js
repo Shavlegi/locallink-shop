@@ -186,7 +186,17 @@ function serviceRowHtml(item) {
     ? '<button class="service-add is-added" type="button" data-toggle-service="' + item.id + '" aria-label="' + esc(t('remove')) + '">−</button>'
     : '<button class="service-add" type="button" data-toggle-service="' + item.id + '" aria-label="' + esc(t('addToCart')) + '">+</button>';
   return '<span>' + esc(item.name[lang]) + tag + '</span>' +
-    '<span class="service-side"><strong>' + esc(item.price[lang]) + '</strong>' + btn + '</span>';
+    '<span class="service-side">' + serviceRowPriceHtml(item) + btn + '</span>';
+}
+
+/* Price part of a services-section row: normally just the price; on sale,
+   the struck-through base price, the sale price, and the shaking −N%
+   badge. Suffixes are preserved on both prices. */
+function serviceRowPriceHtml(item) {
+  if (!hasDiscount(item)) return '<strong>' + esc(item.price[lang]) + '</strong>';
+  return '<span class="service-price-discount"><s>' + esc(item.price[lang]) + '</s> ' +
+    '<strong>' + esc(priceStringForAmount(item, item.sale)) + '</strong> ' +
+    '<span class="discount-badge">−' + item.salePct + '%</span></span>';
 }
 
 /* Re-render every visible service row in place from the current cart
@@ -532,6 +542,24 @@ function cartCount() {
   for (var k in cart) n += entryQty(cart[k]);
   return n;
 }
+/* A service on sale charges its sale price; otherwise its (effective)
+   amount. Discount state is set by applyDiscounts() from the Worker
+   response; without it, both helpers behave exactly as before. */
+function chargeAmount(svc) {
+  return (typeof svc.sale === 'number') ? svc.sale : svc.amount;
+}
+function hasDiscount(svc) {
+  return typeof svc.sale === 'number' && typeof svc.salePct === 'number';
+}
+/* Localized price string with a given number in it — reuses the approved
+   per-language format, so suffixes ("-დან", "/თვე", "from", "от") are
+   preserved. Used for sale prices, which share the base price format. */
+function priceStringForAmount(svc, amount, useLang) {
+  var l = useLang || lang;
+  var s = svc.price[l] || svc.price.ka;
+  if (/\d/.test(s)) return s.replace(/\d+/, String(amount));
+  return s;
+}
 /* Split totals: one-time (products + one-time services) vs monthly.
    hasFrom is true when a "from" price service is in the cart. */
 function cartTotals() {
@@ -542,8 +570,8 @@ function cartTotals() {
     if (entryKind(cart[k]) === 'service') {
       var svc = serviceById(k);
       if (!svc) continue;
-      if (svc.monthly) { monthly += svc.amount * qty; hasMonthly = true; }
-      else once += svc.amount * qty;
+      if (svc.monthly) { monthly += chargeAmount(svc) * qty; hasMonthly = true; }
+      else once += chargeAmount(svc) * qty;
       if (svc.from) hasFrom = true;
     } else {
       var p = productBySlug(k);
@@ -565,8 +593,8 @@ function cartServiceKeys() {
 function servicePriceForQty(svc, qty, useLang) {
   var l = useLang || lang;
   var base = svc.price[l] || svc.price.ka;
-  var total = svc.amount * qty;
-  if (qty === 1) return base;
+  var total = chargeAmount(svc) * qty;
+  if (qty === 1 && !hasDiscount(svc)) return base;
   if (/\d/.test(base)) return base.replace(/\d+/, String(total));
   return base;
 }
@@ -783,9 +811,39 @@ function loadPrices() {
     if (!res.ok) throw new Error('prices http ' + res.status);
     return res.json();
   }).then(function (data) {
-    var overrides = (data && typeof data === 'object') ? data.prices : null;
-    if (applyPriceOverrides(overrides)) applyPricesToView();
+    var obj = (data && typeof data === 'object') ? data : null;
+    var changed = applyPriceOverrides(obj ? obj.prices : null);
+    if (applyDiscounts(obj ? obj.discounts : null)) changed = true;
+    if (changed) applyPricesToView();
   }).catch(function () { /* built-in prices stay — graceful degradation */ });
+}
+
+/* Sale prices from the admin Prices tab: the "discounts" map carries the
+   sale price per service id, and the % badge is computed here as
+   round((base - sale) / base * 100) against the effective base price —
+   so this must run AFTER applyPriceOverrides. A valid discount sets
+   item.sale (the charged amount) and item.salePct. Unknown ids, invalid
+   values, a sale at or above the base, and a zero base are all ignored,
+   leaving the item rendering exactly as before. */
+function applyDiscounts(discounts) {
+  if (!discounts || typeof discounts !== 'object' || Array.isArray(discounts)) return false;
+  var changed = false;
+  for (var gi = 0; gi < SERVICES.length; gi++) {
+    var items = SERVICES[gi].items;
+    for (var ii = 0; ii < items.length; ii++) {
+      var item = items[ii];
+      var v = discounts[item.id];
+      if (typeof v !== 'number' || !isFinite(v) || Math.floor(v) !== v || v < 0) continue;
+      var base = item.amount;
+      if (base <= 0 || v >= base) continue;
+      var pct = Math.round((base - v) / base * 100);
+      if (pct < 1) continue;
+      item.sale = v;
+      item.salePct = pct;
+      changed = true;
+    }
+  }
+  return changed;
 }
 
 /* Show effective prices without a full re-render: service rows refresh in
@@ -885,6 +943,17 @@ function productView(slug) {
   '</div></div>';
 }
 
+/* Unit price line of a cart service row: normally the unit price; on
+   sale, the sale price prominently, the struck-through base price, and
+   the −N% badge. The line total (servicePriceForQty) already uses the
+   sale price. */
+function cartServiceUnitHtml(svc) {
+  if (!hasDiscount(svc)) return esc(servicePriceForQty(svc, 1));
+  return '<strong>' + esc(priceStringForAmount(svc, svc.sale)) + '</strong> ' +
+    '<s class="was-price">' + esc(svc.price[lang]) + '</s> ' +
+    '<span class="discount-badge">−' + svc.salePct + '%</span>';
+}
+
 function cartView() {
   var pKeys = cartProductKeys();
   var sKeys = cartServiceKeys();
@@ -937,7 +1006,7 @@ function cartView() {
       return '<div class="cart-row cart-row-service">' +
         '<div>' +
           '<h3>' + esc(svc.name[lang]) + '</h3>' +
-          '<p class="unit">' + esc(servicePriceForQty(svc, 1)) + '</p>' +
+          '<p class="unit">' + cartServiceUnitHtml(svc) + '</p>' +
           qtyHtml +
           '<button class="remove-btn" type="button" data-cart-remove="' + id + '">' + esc(t('remove')) + '</button>' +
         '</div>' +

@@ -271,6 +271,30 @@ input, textarea { font: inherit; }
 .service-add.is-added { background: transparent; color: var(--accent); border-color: var(--accent); }
 .service-add.is-added:hover { background: rgba(57, 120, 255, .12); }
 .service-added-tag { display: inline-block; margin-left: 8px; padding: 2px 8px; border-radius: 999px; background: var(--accent); color: #fff; font-size: 12px; font-weight: 700; white-space: nowrap; }
+/* Discount badge: small red pill with a gentle periodic shake. The shake
+   occupies only the first ~8% of a 5s cycle and moves at most 1px / 2deg,
+   so it draws the eye without shifting layout. */
+.discount-badge {
+  display: inline-block;
+  background: #e5484d;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+  padding: 4px 7px;
+  border-radius: 999px;
+  white-space: nowrap;
+  animation: discount-shake 5s ease-in-out infinite;
+}
+@keyframes discount-shake {
+  0%, 8%, 100% { transform: rotate(0deg) translateX(0); }
+  1.5% { transform: rotate(-2deg) translateX(-1px); }
+  3% { transform: rotate(2deg) translateX(1px); }
+  4.5% { transform: rotate(-2deg) translateX(-1px); }
+  6% { transform: rotate(2deg) translateX(1px); }
+}
+.service-price-discount { display: inline-flex; align-items: center; gap: 7px; flex-wrap: wrap; }
+.service-price-discount s { color: var(--muted); font-weight: 400; }
 .service-note { margin: 12px 0 0; font-size: 13px; color: var(--muted); }
 .services-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px; }
 
@@ -327,6 +351,8 @@ input, textarea { font: inherit; }
 .from-note { margin: 0; padding: 0 4px; color: var(--muted); font-size: 14px; }
 .cart-row h3 { margin: 0 0 4px; font-size: 15px; line-height: 1.35; }
 .cart-row .unit { color: var(--muted); font-size: 14px; margin: 0 0 8px; }
+.cart-row .unit strong { color: var(--text); }
+.cart-row .unit .was-price { font-size: 13px; }
 .cart-row .line-total { font-weight: 800; white-space: nowrap; }
 .qty-sm button { width: 32px; height: 32px; font-size: 17px; }
 .qty-sm span { min-width: 32px; }
@@ -502,4 +528,5 @@ input, textarea { font: inherit; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   * { transition: none !important; }
+  .discount-badge { animation: none !important; }
 }
