@@ -92,6 +92,98 @@ var PRODUCTS = [
   }
 ];
 
+var SERVICES = [
+  {
+    title: { ka: 'Google Business პროფილი', en: 'Google Business Profile', ru: 'Профиль Google Business' },
+    items: [
+      { name: { ka: 'პროფილის შექმნა', en: 'Profile creation', ru: 'Создание профиля' }, price: { ka: '10₾', en: '10₾', ru: '10₾' } },
+      { name: { ka: 'სრულად შევსება', en: 'Full profile fill-out', ru: 'Полное заполнение' }, price: { ka: '20₾', en: '20₾', ru: '20₾' } },
+      { name: { ka: 'ვერიფიკაციის მოთხოვნის გამზადება', en: 'Verification request preparation', ru: 'Подготовка запроса на верификацию' }, price: { ka: '30₾', en: '30₾', ru: '30₾' } },
+      { name: { ka: 'სამივე ერთად (60₾-ის ნაცვლად)', en: 'All three together (instead of 60₾)', ru: 'Все три вместе (вместо 60₾)' }, price: { ka: '50₾', en: '50₾', ru: '50₾' } }
+    ]
+  },
+  {
+    title: { ka: 'სოციალური ქსელები', en: 'Social media', ru: 'Соцсети' },
+    items: [
+      { name: { ka: 'Facebook გვერდის შექმნა და გამზადება (+ 1 პოსტი საჩუქრად)', en: 'Facebook page setup (+ 1 post as a gift)', ru: 'Создание и оформление страницы Facebook (+ 1 пост в подарок)' }, price: { ka: '10₾', en: '10₾', ru: '10₾' } },
+      { name: { ka: 'Instagram გვერდის შექმნა და გამზადება (+ 1 პოსტი საჩუქრად)', en: 'Instagram page setup (+ 1 post as a gift)', ru: 'Создание и оформление страницы Instagram (+ 1 пост в подарок)' }, price: { ka: '10₾', en: '10₾', ru: '10₾' } }
+    ]
+  },
+  {
+    title: { ka: 'ვებსაიტები', en: 'Websites', ru: 'Сайты' },
+    items: [
+      { name: { ka: 'ვებსაიტის აწყობა', en: 'Website build', ru: 'Создание сайта' }, price: { ka: '50₾-დან', en: 'from 50₾', ru: 'от 50₾' } },
+      { name: { ka: 'დომენი (ცალკე)', en: 'Domain (separate)', ru: 'Домен (отдельно)' }, price: { ka: '5₾-დან', en: 'from 5₾', ru: 'от 5₾' } },
+      { name: { ka: 'მენიუს საიტი (QR უფასოდ)', en: 'Menu website (QR code free)', ru: 'Сайт меню (QR-код бесплатно)' }, price: { ka: '50₾-დან', en: 'from 50₾', ru: 'от 50₾' } },
+      { name: { ka: 'ერთჯერადი განახლება (1 ცვლილება)', en: 'One-off update (1 change)', ru: 'Разовое обновление (1 изменение)' }, price: { ka: '15₾', en: '15₾', ru: '15₾' } },
+      { name: { ka: 'ახალი გვერდის/სექციის დამატება', en: 'New page/section', ru: 'Добавление страницы/раздела' }, price: { ka: '20₾-დან', en: 'from 20₾', ru: 'от 20₾' } },
+      { name: { ka: 'დიზაინის სრული შეცვლა', en: 'Full redesign', ru: 'Полная смена дизайна' }, price: { ka: '50₾-დან', en: 'from 50₾', ru: 'от 50₾' } }
+    ]
+  },
+  {
+    title: { ka: 'დიზაინი და ფოტო', en: 'Design & photos', ru: 'Дизайн и фото' },
+    items: [
+      { name: { ka: 'ბიზნესის ლოგო', en: 'Business logo', ru: 'Логотип бизнеса' }, price: { ka: '10₾', en: '10₾', ru: '10₾' } },
+      { name: { ka: 'ბანერი', en: 'Banner', ru: 'Баннер' }, price: { ka: '5₾-დან', en: 'from 5₾', ru: 'от 5₾' } },
+      { name: { ka: 'ფოტოს დამუშავება (1 ფოტო)', en: 'Photo editing (1 photo)', ru: 'Обработка фото (1 фото)' }, price: { ka: '3₾-დან', en: 'from 3₾', ru: 'от 3₾' } }
+    ]
+  },
+  {
+    title: { ka: 'QR კოდები', en: 'QR codes', ru: 'QR-коды' },
+    items: [
+      { name: { ka: 'Wi-Fi QR სტიკერი (კედელზე საკრავი)', en: 'Wi-Fi QR sticker (wall-mounted)', ru: 'Wi-Fi QR-наклейка (на стену)' }, price: { ka: '5₾', en: '5₾', ru: '5₾' } },
+      { name: { ka: 'ვიზიტკის QR (კონტაქტის შენახვა)', en: 'Business-card QR (save contact)', ru: 'QR-визитка (сохранение контакта)' }, price: { ka: '5₾', en: '5₾', ru: '5₾' } }
+    ]
+  },
+  {
+    title: { ka: 'WhatsApp და Google პოსტები', en: 'WhatsApp & Google posts', ru: 'WhatsApp и посты в Google' },
+    items: [
+      { name: { ka: 'WhatsApp Business-ის დაყენება (მისალმება, ავტო-პასუხები)', en: 'WhatsApp Business setup (greeting, auto-replies)', ru: 'Настройка WhatsApp Business (приветствие, автоответы)' }, price: { ka: '30₾', en: '30₾', ru: '30₾' } },
+      { name: { ka: 'Google პოსტი (1 ცალი)', en: 'Google post (single)', ru: 'Пост в Google (1 шт.)' }, price: { ka: '10₾', en: '10₾', ru: '10₾' } }
+    ]
+  },
+  {
+    title: { ka: 'ყოველთვიური მომსახურება', en: 'Monthly services', ru: 'Ежемесячные услуги' },
+    items: [
+      { name: { ka: 'შეფასებებზე პასუხები (ინდივიდუალური პასუხი ყოველ შეფასებაზე)', en: 'Review replies (a personal reply to every review)', ru: 'Ответы на отзывы (личный ответ на каждый отзыв)' }, price: { ka: '30₾/თვე', en: '30₾/mo', ru: '30₾/мес' } },
+      { name: { ka: 'Google პოსტები (4 პოსტი თვეში)', en: 'Google posts (4 posts a month)', ru: 'Посты в Google (4 поста в месяц)' }, price: { ka: '25₾/თვე', en: '25₾/mo', ru: '25₾/мес' } },
+      { name: { ka: 'საიტის მოვლა (განახლებები, შემოწმება, დომენის კონტროლი)', en: 'Website care (updates, checks, domain watch)', ru: 'Обслуживание сайта (обновления, проверка, контроль домена)' }, price: { ka: '25₾/თვე', en: '25₾/mo', ru: '25₾/мес' } }
+    ],
+    note: { ka: 'ცალ-ცალკე იყიდება, პაკეტის ფასდაკლების გარეშე.', en: 'Sold separately, no bundle discount.', ru: 'Продаются отдельно, без скидки за пакет.' }
+  },
+  {
+    title: { ka: 'სასწრაფო გამოძახება', en: 'Emergency callout', ru: 'Срочный выезд' },
+    items: [
+      { name: { ka: 'გამოძახება 10:00–18:00', en: 'Callout 10:00–18:00', ru: 'Выезд 10:00–18:00' }, price: { ka: '20₾', en: '20₾', ru: '20₾' } },
+      { name: { ka: 'გამოძახება 24/7', en: 'Callout 24/7', ru: 'Выезд 24/7' }, price: { ka: '30₾', en: '30₾', ru: '30₾' } }
+    ],
+    note: { ka: 'მარტივი გასწორება (30 წუთამდე) ფასში შედის. 30 წუთზე მეტი — სხვა ფასი, გასაკეთებელზეა დამოკიდებული.', en: 'A simple fix (up to 30 minutes) is included. Longer work is priced separately, depending on the job.', ru: 'Простое исправление (до 30 минут) включено. Более долгая работа оплачивается отдельно, в зависимости от задачи.' }
+  },
+  {
+    title: { ka: 'VIP მომსახურება', en: 'VIP service', ru: 'VIP-обслуживание' },
+    items: [
+      { name: { ka: 'VIP 1 — 10:00–18:00, 10 ვიზიტამდე', en: 'VIP 1 — 10:00–18:00, up to 10 visits', ru: 'VIP 1 — 10:00–18:00, до 10 визитов' }, price: { ka: '99₾/თვე', en: '99₾/mo', ru: '99₾/мес' } },
+      { name: { ka: 'VIP 2 — 24/7, 20 ვიზიტამდე', en: 'VIP 2 — 24/7, up to 20 visits', ru: 'VIP 2 — 24/7, до 20 визитов' }, price: { ka: '149₾/თვე', en: '149₾/mo', ru: '149₾/мес' } }
+    ],
+    note: { ka: 'მხოლოდ ახალციხეში. VIP 1-ით ზოგავთ 101₾-ს, VIP 2-ით — 451₾-ს თვეში.', en: 'Akhaltsikhe only. VIP 1 saves you 101₾ a month, VIP 2 saves 451₾.', ru: 'Только в Ахалцихе. VIP 1 экономит 101₾ в месяц, VIP 2 — 451₾.' }
+  }
+];
+
+function servicesGroupsHtml() {
+  var html = '';
+  for (var gi = 0; gi < SERVICES.length; gi++) {
+    var g = SERVICES[gi];
+    html += '<div class="service-group"><h3>' + esc(g.title[lang]) + '</h3><ul class="service-list">';
+    for (var ii = 0; ii < g.items.length; ii++) {
+      html += '<li><span>' + esc(g.items[ii].name[lang]) + '</span><strong>' + esc(g.items[ii].price[lang]) + '</strong></li>';
+    }
+    html += '</ul>';
+    if (g.note) html += '<p class="service-note">' + esc(g.note[lang]) + '</p>';
+    html += '</div>';
+  }
+  return html;
+}
+
 var I18N = {
   ka: {
     siteTitle: 'locallink — NFC პროდუქტები შენი ბიზნესისთვის',
@@ -125,15 +217,11 @@ var I18N = {
     deliveryTitle: 'მიწოდება და მონტაჟი',
     deliveryText: 'ახალციხეში მიწოდება და მონტაჟი უფასოა. შეკვეთას მოგიტანთ და ადგილზე დაგიმონტაჟებთ.',
     navServices: 'სერვისები',
-    servicesTitle: 'ვებსაიტების აწყობა',
-    servicesText: 'თანამედროვე ვებსაიტი თქვენი ბიზნესისთვის. დეტალები და საბოლოო ფასი შეთანხმებით — დაგვიკავშირდით.',
-    servicesSite: 'საიტის აწყობა',
-    servicesSitePrice: '50₾-დან',
-    servicesDomain: 'დომენი (ცალკე)',
-    servicesDomainPrice: '5₾-დან',
+    servicesTitle: 'სერვისები და ფასები',
+    servicesText: 'სერვისები თქვენი ბიზნესისთვის — Google პროფილი, საიტები, სოცქსელები, QR კოდები და ყოველთვიური მოვლა. დეტალებისთვის დაგვიკავშირდით.',
     servicesWhatsApp: 'WhatsApp-ით დაკავშირება',
     servicesCall: 'დარეკვა',
-    servicesWaText: 'გამარჯობა, ვებსაიტის აწყობა მაინტერესებს.',
+    servicesWaText: 'გამარჯობა, სერვისები მაინტერესებს.',
     aboutTitle: 'ჩვენს შესახებ',
     aboutText: 'locallink — NFC პროდუქტები ბიზნესისთვის: სტენდები, ბარათები და სტიკერები, რომლებიც მომხმარებელს Google შეფასების გვერდზე გადასვლას უმარტივებს.',
     contactTitle: 'კონტაქტი',
@@ -206,15 +294,11 @@ var I18N = {
     deliveryTitle: 'Delivery and installation',
     deliveryText: 'Delivery and installation in Akhaltsikhe are free. We bring your order and install it on site.',
     navServices: 'Services',
-    servicesTitle: 'Website development',
-    servicesText: 'A modern website for your business. Details and the final price are agreed individually — contact us.',
-    servicesSite: 'Website build',
-    servicesSitePrice: 'from 50₾',
-    servicesDomain: 'Domain (separate)',
-    servicesDomainPrice: 'from 5₾',
+    servicesTitle: 'Services & prices',
+    servicesText: 'Services for your business — Google profile, websites, social media, QR codes and monthly care. Contact us for details.',
     servicesWhatsApp: 'Contact via WhatsApp',
     servicesCall: 'Call',
-    servicesWaText: 'Hello, I am interested in a website build.',
+    servicesWaText: 'Hello, I am interested in your services.',
     aboutTitle: 'About us',
     aboutText: 'locallink — NFC products for businesses: stands, cards and stickers that make it easy for customers to reach your Google review page.',
     contactTitle: 'Contact',
@@ -287,15 +371,11 @@ var I18N = {
     deliveryTitle: 'Доставка и установка',
     deliveryText: 'В Ахалцихе доставка и установка бесплатны. Мы привезём заказ и установим его на месте.',
     navServices: 'Услуги',
-    servicesTitle: 'Создание сайтов',
-    servicesText: 'Современный сайт для вашего бизнеса. Детали и итоговая цена — по договорённости, свяжитесь с нами.',
-    servicesSite: 'Создание сайта',
-    servicesSitePrice: 'от 50₾',
-    servicesDomain: 'Домен (отдельно)',
-    servicesDomainPrice: 'от 5₾',
+    servicesTitle: 'Услуги и цены',
+    servicesText: 'Услуги для вашего бизнеса — профиль в Google, сайты, соцсети, QR-коды и ежемесячное обслуживание. Свяжитесь с нами для деталей.',
     servicesWhatsApp: 'Связаться в WhatsApp',
     servicesCall: 'Позвонить',
-    servicesWaText: 'Здравствуйте, меня интересует создание сайта.',
+    servicesWaText: 'Здравствуйте, меня интересуют ваши услуги.',
     aboutTitle: 'О нас',
     aboutText: 'locallink — NFC-продукты для бизнеса: стенды, карты и наклейки, с которыми клиенты легко переходят на страницу отзывов в Google.',
     contactTitle: 'Контакты',
@@ -590,16 +670,11 @@ function homeView() {
     '</div></section>' +
 
     '<section class="section section-alt" id="services"><div class="container">' +
-      '<div class="services-box">' +
-        '<div class="delivery-icon" aria-hidden="true">💻</div>' +
-        '<div><h2>' + esc(t('servicesTitle')) + '</h2><p>' + esc(t('servicesText')) + '</p>' +
-          '<p class="services-price"><span>' + esc(t('servicesSite')) + '</span> <strong>' + esc(t('servicesSitePrice')) + '</strong></p>' +
-          '<p class="services-price"><span>' + esc(t('servicesDomain')) + '</span> <strong>' + esc(t('servicesDomainPrice')) + '</strong></p>' +
-          '<div class="services-actions">' +
-            '<a class="btn" style="width:auto" href="' + WA_URL + '?text=' + encodeURIComponent(t('servicesWaText')) + '" target="_blank" rel="noopener">' + esc(t('servicesWhatsApp')) + '</a>' +
-            '<a class="btn btn-outline" style="width:auto" href="' + PHONE_LINK + '">' + esc(t('servicesCall')) + '</a>' +
-          '</div>' +
-        '</div>' +
+      '<div class="services-head"><h2>' + esc(t('servicesTitle')) + '</h2><p>' + esc(t('servicesText')) + '</p></div>' +
+      '<div class="services-groups">' + servicesGroupsHtml() + '</div>' +
+      '<div class="services-actions">' +
+        '<a class="btn" style="width:auto" href="' + WA_URL + '?text=' + encodeURIComponent(t('servicesWaText')) + '" target="_blank" rel="noopener">' + esc(t('servicesWhatsApp')) + '</a>' +
+        '<a class="btn btn-outline" style="width:auto" href="' + PHONE_LINK + '">' + esc(t('servicesCall')) + '</a>' +
       '</div>' +
     '</div></section>' +
 
