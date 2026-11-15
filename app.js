@@ -13,6 +13,7 @@ var EMAIL = 'locallink.ge@gmail.com';
 var FORMSUBMIT_URL = 'https://formsubmit.co/ajax/' + EMAIL;
 var SITE_URL = 'https://locallink.store/';
 var STOCK_API_URL = 'https://locallink-stock.shao42ia.workers.dev/api/stock';
+var PRICES_API_URL = 'https://locallink-stock.shao42ia.workers.dev/api/prices';
 
 var PRODUCTS = [
   {
@@ -746,6 +747,62 @@ function applyStock() {
   }
 }
 
+/* ---------- service prices (Cloudflare Worker API, overrides only) ---------- */
+
+/* The admin Prices tab stores service price overrides in the Worker; the
+   site fetches them once on load and merges them over the built-in
+   defaults. An override replaces the amount AND the number inside each
+   localized display string, so "50₾-დან" / "from 50₾" / "от 50₾" keep
+   their format with the new amount. Returns true when anything actually
+   changed. Unknown ids and invalid values are ignored. */
+function applyPriceOverrides(overrides) {
+  if (!overrides || typeof overrides !== 'object' || Array.isArray(overrides)) return false;
+  var changed = false;
+  var locales = ['ka', 'en', 'ru'];
+  for (var gi = 0; gi < SERVICES.length; gi++) {
+    var items = SERVICES[gi].items;
+    for (var ii = 0; ii < items.length; ii++) {
+      var item = items[ii];
+      var v = overrides[item.id];
+      if (typeof v !== 'number' || !isFinite(v) || Math.floor(v) !== v || v < 0 || v > 99999) continue;
+      if (v === item.amount) continue;
+      item.amount = v;
+      for (var li = 0; li < locales.length; li++) {
+        var s = item.price[locales[li]];
+        if (s && /\d/.test(s)) item.price[locales[li]] = s.replace(/\d+/, String(v));
+      }
+      changed = true;
+    }
+  }
+  return changed;
+}
+
+function loadPrices() {
+  if (typeof fetch !== 'function') return;
+  fetch(PRICES_API_URL, { headers: { 'Accept': 'application/json' } }).then(function (res) {
+    if (!res.ok) throw new Error('prices http ' + res.status);
+    return res.json();
+  }).then(function (data) {
+    var overrides = (data && typeof data === 'object') ? data.prices : null;
+    if (applyPriceOverrides(overrides)) applyPricesToView();
+  }).catch(function () { /* built-in prices stay — graceful degradation */ });
+}
+
+/* Show effective prices without a full re-render: service rows refresh in
+   place (no scroll reset). The cart view re-renders, unless the customer
+   already typed into the order form — then the new prices apply on the
+   next render and to the submitted order, which is built from SERVICES. */
+function applyPricesToView() {
+  refreshServiceRows();
+  if (currentRoute().name !== 'cart') return;
+  var form = document.getElementById('order-form');
+  if (form) {
+    var fields = form.querySelectorAll('input[type="text"], input[type="tel"], textarea');
+    for (var i = 0; i < fields.length; i++) if (fields[i].value) return;
+  }
+  renderView();
+}
+
 /* ---------- views ---------- */
 
 function homeView() {
@@ -1272,3 +1329,4 @@ window.addEventListener('hashchange', renderView);
 renderChrome();
 renderView();
 loadStock();
+loadPrices();
