@@ -271,9 +271,11 @@ input, textarea { font: inherit; }
 .service-add.is-added { background: transparent; color: var(--accent); border-color: var(--accent); }
 .service-add.is-added:hover { background: rgba(57, 120, 255, .12); }
 .service-added-tag { display: inline-block; margin-left: 8px; padding: 2px 8px; border-radius: 999px; background: var(--accent); color: #fff; font-size: 12px; font-weight: 700; white-space: nowrap; }
-/* Discount badge: small red pill with a gentle periodic shake. The shake
+/* Discount badge: small pill with a gentle periodic shake. The shake
    occupies only the first ~8% of a 5s cycle and moves at most 1px / 2deg,
-   so it draws the eye without shifting layout. */
+   so it draws the eye without shifting layout. The pill color depends on
+   the discount %: red up to 20%, yellow 21–50%, green above 50% — the
+   same bands as the admin panel. */
 .discount-badge {
   display: inline-block;
   background: #e5484d;
@@ -286,6 +288,10 @@ input, textarea { font: inherit; }
   white-space: nowrap;
   animation: discount-shake 5s ease-in-out infinite;
 }
+/* Yellow uses dark text for readability on the light background. */
+.discount-badge-red { background: #E5484D; color: #fff; }
+.discount-badge-yellow { background: #F5C518; color: #1A1A1A; }
+.discount-badge-green { background: #22C55E; color: #fff; }
 @keyframes discount-shake {
   0%, 8%, 100% { transform: rotate(0deg) translateX(0); }
   1.5% { transform: rotate(-2deg) translateX(-1px); }

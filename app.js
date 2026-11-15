@@ -196,7 +196,7 @@ function serviceRowPriceHtml(item) {
   if (!hasDiscount(item)) return '<strong>' + esc(item.price[lang]) + '</strong>';
   return '<span class="service-price-discount"><s>' + esc(item.price[lang]) + '</s> ' +
     '<strong>' + esc(priceStringForAmount(item, item.sale)) + '</strong> ' +
-    '<span class="discount-badge">−' + item.salePct + '%</span></span>';
+    '<span class="discount-badge ' + discountBadgeClass(item.salePct) + '">−' + item.salePct + '%</span></span>';
 }
 
 /* Re-render every visible service row in place from the current cart
@@ -550,6 +550,13 @@ function chargeAmount(svc) {
 }
 function hasDiscount(svc) {
   return typeof svc.sale === 'number' && typeof svc.salePct === 'number';
+}
+/* Discount badge color by %: red up to 20%, yellow 21–50%, green above
+   50%. Same bands as the admin panel. */
+function discountBadgeClass(pct) {
+  if (pct <= 20) return 'discount-badge-red';
+  if (pct <= 50) return 'discount-badge-yellow';
+  return 'discount-badge-green';
 }
 /* Localized price string with a given number in it — reuses the approved
    per-language format, so suffixes ("-დან", "/თვე", "from", "от") are
@@ -951,7 +958,7 @@ function cartServiceUnitHtml(svc) {
   if (!hasDiscount(svc)) return esc(servicePriceForQty(svc, 1));
   return '<strong>' + esc(priceStringForAmount(svc, svc.sale)) + '</strong> ' +
     '<s class="was-price">' + esc(svc.price[lang]) + '</s> ' +
-    '<span class="discount-badge">−' + svc.salePct + '%</span>';
+    '<span class="discount-badge ' + discountBadgeClass(svc.salePct) + '">−' + svc.salePct + '%</span>';
 }
 
 function cartView() {
