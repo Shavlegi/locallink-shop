@@ -169,6 +169,36 @@ var SERVICES = [
   }
 ];
 
+function serviceInCart(id) {
+  var e = cart[id];
+  return !!e && entryKind(e) === 'service' && entryQty(e) > 0;
+}
+
+/* One service row, rendered from the CURRENT cart state: an added service
+   shows a "✓ in cart" tag next to its name and a "−" button; otherwise
+   the row shows a "+" button. Used both at page render and for in-place
+   updates when a service is toggled (no full page re-render). */
+function serviceRowHtml(item) {
+  var added = serviceInCart(item.id);
+  var tag = added ? ' <span class="service-added-tag">✓ ' + esc(t('inCartTag')) + '</span>' : '';
+  var btn = added
+    ? '<button class="service-add is-added" type="button" data-toggle-service="' + item.id + '" aria-label="' + esc(t('remove')) + '">−</button>'
+    : '<button class="service-add" type="button" data-toggle-service="' + item.id + '" aria-label="' + esc(t('addToCart')) + '">+</button>';
+  return '<span>' + esc(item.name[lang]) + tag + '</span>' +
+    '<span class="service-side"><strong>' + esc(item.price[lang]) + '</strong>' + btn + '</span>';
+}
+
+/* Re-render every visible service row in place from the current cart
+   state — keeps toggle states consistent after adds, removes and the
+   automatic bundle-exclusivity removals. */
+function refreshServiceRows() {
+  var rows = document.querySelectorAll('[data-service-row]');
+  for (var i = 0; i < rows.length; i++) {
+    var svc = serviceById(rows[i].getAttribute('data-service-row'));
+    if (svc) rows[i].innerHTML = serviceRowHtml(svc);
+  }
+}
+
 function servicesGroupsHtml() {
   var html = '';
   for (var gi = 0; gi < SERVICES.length; gi++) {
@@ -176,8 +206,7 @@ function servicesGroupsHtml() {
     html += '<div class="service-group"><h3>' + esc(g.title[lang]) + '</h3><ul class="service-list">';
     for (var ii = 0; ii < g.items.length; ii++) {
       var item = g.items[ii];
-      html += '<li><span>' + esc(item.name[lang]) + '</span><span class="service-side"><strong>' + esc(item.price[lang]) + '</strong>' +
-        '<button class="service-add" type="button" data-add-service="' + item.id + '" aria-label="' + esc(t('addToCart')) + '">+</button></span></li>';
+      html += '<li data-service-row="' + item.id + '">' + serviceRowHtml(item) + '</li>';
     }
     html += '</ul>';
     if (g.note) html += '<p class="service-note">' + esc(g.note[lang]) + '</p>';
@@ -246,6 +275,8 @@ var I18N = {
     totalMonthly: 'ყოველთვიური ჯამი',
     fromPriceNote: 'საბოლოო ფასი შეთანხმებით.',
     toastServiceAdded: 'სერვისი დაემატა კალათაში',
+    inCartTag: 'კალათაშია',
+    monthlySuffix: '/თვე',
     optionalHint: '(არასავალდებულო)',
     remove: 'წაშლა',
     formTitle: 'შეკვეთის გაფორმება',
@@ -328,6 +359,8 @@ var I18N = {
     totalMonthly: 'Monthly total',
     fromPriceNote: 'Final price to be agreed.',
     toastServiceAdded: 'Service added to cart',
+    inCartTag: 'In cart',
+    monthlySuffix: '/mo',
     optionalHint: '(optional)',
     remove: 'Remove',
     formTitle: 'Checkout',
@@ -410,6 +443,8 @@ var I18N = {
     totalMonthly: 'Ежемесячный итог',
     fromPriceNote: 'Итоговая цена — по договорённости.',
     toastServiceAdded: 'Услуга добавлена в корзину',
+    inCartTag: 'В корзине',
+    monthlySuffix: '/мес',
     optionalHint: '(необязательно)',
     remove: 'Удалить',
     formTitle: 'Оформление заказа',
@@ -828,7 +863,9 @@ function cartView() {
     }).join('');
   }
   if (sKeys.length) {
-    if (mixed) itemsHtml += '<h2 class="cart-section-title">' + esc(t('navServices')) + '</h2>';
+    /* The services heading shows whenever any service is in the cart,
+       including services-only carts. Products-only carts keep no heading. */
+    itemsHtml += '<h2 class="cart-section-title">' + esc(t('navServices')) + '</h2>';
     itemsHtml += sKeys.map(function (id) {
       var svc = serviceById(id);
       var qty = entryQty(cart[id]);
@@ -859,7 +896,7 @@ function cartView() {
       totalsHtml += '<div class="cart-total-row"><span>' + esc(t('totalOnce')) + '</span><span>' + price(totals.once) + '</span></div>';
     }
     if (totals.hasMonthly) {
-      totalsHtml += '<div class="cart-total-row"><span>' + esc(t('totalMonthly')) + '</span><span>' + price(totals.monthly) + '</span></div>';
+      totalsHtml += '<div class="cart-total-row"><span>' + esc(t('totalMonthly')) + '</span><span>' + price(totals.monthly) + esc(t('monthlySuffix')) + '</span></div>';
     }
     if (totals.hasFrom) {
       totalsHtml += '<p class="from-note">' + esc(t('fromPriceNote')) + '</p>';
@@ -952,14 +989,42 @@ function addToCart(slug, qty) {
   showToast(t('toastAdded'));
 }
 
+/* The "all three together" bundle (gbp-all) and its three components are
+   mutually exclusive in the cart — the bundle must never be counted
+   together with any component. Enforced here, in the single service
+   add path, so every entry point behaves the same. */
+var GBP_BUNDLE_ID = 'gbp-all';
+var GBP_COMPONENT_IDS = ['gbp-create', 'gbp-fill', 'gbp-verify'];
+
 /* Services have a fixed quantity of 1 (photo-edit quantity is adjusted in
    the cart). Adding a service that is already in the cart is a no-op. */
 function addServiceToCart(id) {
   if (!serviceById(id)) return;
+  if (id === GBP_BUNDLE_ID) {
+    for (var i = 0; i < GBP_COMPONENT_IDS.length; i++) delete cart[GBP_COMPONENT_IDS[i]];
+  } else if (GBP_COMPONENT_IDS.indexOf(id) !== -1) {
+    delete cart[GBP_BUNDLE_ID];
+  }
   if (!cart[id]) cart[id] = { kind: 'service', qty: 1 };
   saveCart();
   updateBadge();
   showToast(t('toastServiceAdded'));
+}
+
+/* Toggle a service from its row button: "+" adds it (with the normal add
+   toast), "−" removes the whole entry at once (all quantity, e.g.
+   photo-edit). Row states refresh in place, including rows auto-removed
+   by the bundle rule. */
+function toggleServiceInCart(id) {
+  if (!serviceById(id)) return;
+  if (serviceInCart(id)) {
+    delete cart[id];
+    saveCart();
+    updateBadge();
+  } else {
+    addServiceToCart(id);
+  }
+  refreshServiceRows();
 }
 
 function bindProductPage() {
@@ -1133,9 +1198,9 @@ document.addEventListener('click', function (e) {
     addToCart(addBtn.getAttribute('data-add'), parseInt(addBtn.getAttribute('data-add-qty') || '1', 10) || 1);
     return;
   }
-  var addSvcBtn = e.target.closest('[data-add-service]');
-  if (addSvcBtn) {
-    addServiceToCart(addSvcBtn.getAttribute('data-add-service'));
+  var toggleSvcBtn = e.target.closest('[data-toggle-service]');
+  if (toggleSvcBtn) {
+    toggleServiceInCart(toggleSvcBtn.getAttribute('data-toggle-service'));
     return;
   }
   var inc = e.target.closest('[data-cart-inc]');
